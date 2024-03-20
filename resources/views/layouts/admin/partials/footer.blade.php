@@ -1,8 +1,8 @@
 <footer class="footer mt-auto">
     <div class="copyright bg-white">
         <p>
-            Copyright &copy; <span id="ec-year"></span><a class="text-primary"
-            href="https://themeforest.net/user/ashishmaraviya" target="_blank"> Ekka Admin Dashboard</a>. All Rights Reserved.
+            {{__('Copyright')}} &copy; <span id="ec-year"></span><a class="text-primary"
+            href="https://hgateam.com/" target="_blank"> HGATeam</a>. {{__('All Rights Reserved')}}.
           </p>
     </div>
 </footer>

@@ -23,7 +23,9 @@
                     </div>
                     <div class="card-toolbar">
                         <button type="button" class="m-3 btn btn-warning import">{{__('Import')}}</button>
+                        @if($clients)
                         <button type="button" class="m-3 btn btn-primary export">{{__('Export')}}</button>
+                        @endif
                         <button type="button" class="m-3 btn btn-secondary template">{{__('Template')}}</button>
                     </div>
                 </div>
@@ -159,10 +161,8 @@
                     </div>
 
                     <div class="modal-footer px-4">
-                        <button type="button" class="btn btn-secondary btn-pill"
-                            id="btnCancel">{{ __('Cancel') }}</button>
-                        <button type="button" class="btn btn-primary btn-pill"
-                            id="btnSave">{{ __('Save') }}</button>
+                        <button type="button" class="btn btn-secondary btn-pill" id="btnCancel">{{ __('Cancel') }}</button>
+                        <button type="button" class="btn btn-primary btn-pill" id="btnSave">{{ __('Save') }}</button>
                     </div>
 
                 </form>
@@ -177,7 +177,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="editClientModalLabel">{{ __('Edit Client') }}</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">x</button>
                 </div>
                 <div class="modal-body">
                     <!-- Agrega aquí los campos del formulario para editar el usuario -->

@@ -67,4 +67,12 @@ class User extends Authenticatable
         ]);
         return $arrayName;
     }
+
+    public function getAvatarAttribute($value)
+    {
+        if (!$value) {
+            return asset('/images/blank.png');
+        }
+        return asset($value);
+    }
 }

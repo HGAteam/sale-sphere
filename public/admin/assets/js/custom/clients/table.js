@@ -65,11 +65,7 @@ $(document).ready(function () {
                     orderable: false,
                     targets: 1,
                     render: function (data) {
-                        if (!data.image) {
-                            return `<img class="cat-thumb" src="/admin/assets/img/category/clothes.png" alt="Client Image" />`;
-                        } else {
-                            return `<img class="cat-thumb" src="/${data.image}" alt="Client Image" />`;
-                        }
+                            return `<img class="cat-thumb" src="${data.image}" alt="Client Image" />`;
                     },
                 },
                 {

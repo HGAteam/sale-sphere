@@ -35,6 +35,7 @@ class UserController extends Controller
             ['url' => '/home/users', 'label' => trans('Users')]
         ];
 
+
         return view('pages.admin.users.index', compact('breadcrumb'));
     }
 
@@ -85,7 +86,7 @@ class UserController extends Controller
                 $image = $request->file('image');
 
                 // Generar un nombre único para la imagen
-                $imageName = time() . '_' . $image->getClientOriginalName();
+                $imageName = time() . '.' . $image->getClientOriginalExtension();
 
                 // Guardar la imagen original en el sistema de archivos
                 $imagePath = public_path('images/users/') . $imageName;
@@ -189,7 +190,7 @@ class UserController extends Controller
             // Actualizar la imagen solo si se proporciona una nueva imagen
             if ($request->file('edit_image') && $request->file('edit_image') != null && $request->file('edit_image') != '') {
                 $image = $request->file('edit_image');
-                $imageName = time() . '_' . $image->getClientOriginalName();
+                $imageName = time() . '.' . $image->getClientOriginalExtension();
                 $imagePath = public_path('images/users/') . $imageName;
                 $image->move(public_path('images/users/'), $imageName);
                 $resizedImagePath = 'images/users/' . $imageName;
@@ -240,7 +241,7 @@ class UserController extends Controller
                     }
                 }
                 $image = $request->file('image');
-                $imageName = time() . '_' . $image->getClientOriginalName();
+                $imageName = time() . '.' . $image->getClientOriginalExtension();
                 $imagePath = public_path('images/users/') . $imageName;
                 $image->move(public_path('images/users/'), $imageName);
                 $resizedImagePath = 'images/users/' . $imageName;

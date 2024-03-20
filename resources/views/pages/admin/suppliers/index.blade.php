@@ -23,7 +23,9 @@
                     </div>
                     <div class="card-toolbar">
                         <button type="button" class="m-3 btn btn-warning import">{{__('Import')}}</button>
+                        @if($suppliers)
                         <button type="button" class="m-3 btn btn-primary export">{{__('Export')}}</button>
+                        @endif
                         <button type="button" class="m-3 btn btn-secondary template">{{__('Template')}}</button>
                     </div>
                 </div>

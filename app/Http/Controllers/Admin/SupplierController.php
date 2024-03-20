@@ -24,8 +24,9 @@ class SupplierController extends Controller
             ['url' => '/', 'label' => trans('Home')],
             ['url' => '#', 'label' => trans('Suppliers')],
         ];
+        $suppliers = Supplier::all()->count();
 
-        return view('pages.admin.suppliers.index',compact('breadcrumb'));
+        return view('pages.admin.suppliers.index',compact('breadcrumb', 'suppliers'));
     }
 
     public function data()
@@ -36,6 +37,7 @@ class SupplierController extends Controller
         foreach ($supplierArray as $value) {
             $data['id'] = $value->id;
             $data['social_reason'] = $value->social_reason;
+            $data['image'] = $value->image;
             $data['contact'] = $value->contact;
             $data['cuit'] = $value->cuit;
             $data['status'] = $value->status;
@@ -84,7 +86,7 @@ class SupplierController extends Controller
             $supplier->details = $request->details;
             if($request->file('image')){
                 $image = $request->file('image');
-                $imageName = time() . '_' . $image->getClientOriginalName();
+                $imageName = time() . '.' . $image->getClientOriginalExtension();
                 $imagePath = public_path('images/suppliers/') . $imageName;
                 $image->move(public_path('images/suppliers/'), $imageName);
                 $resizedImagePath = 'images/suppliers/' . $imageName;
@@ -206,7 +208,7 @@ class SupplierController extends Controller
             // Actualizar la imagen solo si se proporciona una nueva imagen
             if ($request->file('edit_image') && $request->file('edit_image') != null && $request->file('edit_image') != '') {
                 $image = $request->file('edit_image');
-                $imageName = time() . '_' . $image->getClientOriginalName();
+                $imageName = time() . '.' . $image->getClientOriginalExtension();
                 $imagePath = public_path('images/suppliers/') . $imageName;
                 $image->move(public_path('images/suppliers/'), $imageName);
                 $resizedImagePath = 'images/suppliers/' . $imageName;

@@ -17,6 +17,7 @@ $(document).ready(function () {
                 });
                   // Recargar el DataTable
                   clientDataTable.DataTable().ajax.reload();
+                  $('#add_new')[0].reset();
             },
             error: function (xhr) {
                 if (xhr.status === 422) {

@@ -25,8 +25,9 @@ class ClientController extends Controller
             ['url' => '/home', 'label' => trans('Home')],
             ['url' => '#', 'label' => trans('Clients')],
         ];
+        $clients = Client::all()->count();
 
-        return view('pages.admin.clients.index',compact('breadcrumb'));
+        return view('pages.admin.clients.index',compact('breadcrumb','clients'));
     }
 
     public function data()
@@ -84,14 +85,13 @@ class ClientController extends Controller
             $client->location = $request->location;
             if($request->file('image')){
                 $image = $request->file('image');
-                $imageName = time() . '_' . $image->getClientOriginalName();
+                $imageName = time() . '.' . $image->getClientOriginalExtension();
                 $imagePath = public_path('images/clients/') . $imageName;
                 $image->move(public_path('images/clients/'), $imageName);
                 $resizedImagePath = 'images/clients/' . $imageName;
 
                 // Redimensionar y corregir la orientación de la imagen
-                Image::make($imagePath)
-                    ->resize(640, 640, function ($constraint) {
+                Image::make($imagePath)->resize(640, 640, function ($constraint) {
                         $constraint->aspectRatio(); // Mantener la proporción original
                     })
                     ->orientate() // Corregir la orientación
@@ -179,7 +179,7 @@ class ClientController extends Controller
             if ($request->file('edit_image') && $request->file('edit_image') != null && $request->file('edit_image') != '') {
                 if($request->file('edit_image')){
                     $image = $request->file('edit_image');
-                    $imageName = time() . '_' . $image->getClientOriginalName();
+                    $imageName = time() . '.' . $image->getClientOriginalExtension();
                     $imagePath = public_path('images/clients/') . $imageName;
                     $image->move(public_path('images/clients/'), $imageName);
                     $resizedImagePath = 'images/clients/' . $imageName;

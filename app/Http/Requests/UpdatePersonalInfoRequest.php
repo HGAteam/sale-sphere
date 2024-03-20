@@ -31,7 +31,7 @@ class UpdatePersonalInfoRequest extends FormRequest
             'phone' => 'nullable|string|max:20',
             'mobile' => 'nullable|string|max:20',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'email' => 'nullable|email|string|max:255|unique:users'
+            // 'email' => 'nullable|email|string|max:255|unique:users'
         ];
     }
 }

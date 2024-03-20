@@ -274,43 +274,49 @@ $(document).ready(function () {
     }
 
     // Manejar el evento de cambio en los campos de código de barras
-$('#products-container').on('input', '.barcode-input', function () {
-    var barcode = $(this).val();
-    var productId = $(this).data('product-id');
-    var token = $('meta[name="csrf-token"]').attr('content'); // Obtener el token CSRF de la metaetiqueta
+    $('#products-container').on('input', '.barcode-input', function () {
+        var barcode = $(this).val();
+        var productId = $(this).data('product-id');
+        var token = $('meta[name="csrf-token"]').attr('content'); // Obtener el token CSRF de la metaetiqueta
 
-    // Guardar una referencia al contexto actual
-    var $this = $(this);
+        // Guardar una referencia al contexto actual
+        var $this = $(this);
 
-    // Realizar una solicitud AJAX al backend para procesar la validación
-    $.ajax({
-        url: window.location.pathname + '/process-validation',
-        type: 'POST',
-        data: {
-            _token: token,
-            barcode: barcode,
-            product_id: productId
-        },
-        success: function (response) {
-            // Ocultar el elemento del producto validado
-            $this.closest('.product').hide().remove(); // Remover el elemento del DOM
-
-            toastr.success(response.message);
-
-            // Verificar si es el último elemento
-            if ($('#products-container .product').length === 0) {
-                // Cerrar el modal
-                $('#validateStockModal').modal('hide');
-                // Recargar la página
-                window.location.reload();
-            }
-        },
-        error: function (xhr, status, error) {
-            toastr.error('Error al procesar la validación:', error);
-            // console.error('Error al procesar la validación:', error);
+        // Verificar la longitud del código de barras
+        if (barcode.length < 6) {
+            // Si el código de barras tiene menos de 6 caracteres, salir de la función
+            return;
         }
+
+        // Realizar una solicitud AJAX al backend para procesar la validación
+        $.ajax({
+            url: window.location.pathname + '/process-validation',
+            type: 'POST',
+            data: {
+                _token: token,
+                barcode: barcode,
+                product_id: productId
+            },
+            success: function (response) {
+                // Ocultar el elemento del producto validado
+                $this.closest('.product').hide().remove(); // Remover el elemento del DOM
+
+                toastr.success(response.message);
+
+                // Verificar si es el último elemento
+                if ($('#products-container .product').length === 0) {
+                    // Cerrar el modal
+                    $('#validateStockModal').modal('hide');
+                    // Recargar la página
+                    window.location.reload();
+                }
+            },
+            error: function (xhr, status, error) {
+                toastr.error('Error al procesar la validación:', error);
+                // console.error('Error al procesar la validación:', error);
+            }
+        });
     });
-});
 
     // Save Product Increase Quantity
     $('#btnProductIncrease').on('click', function (e) {
@@ -333,11 +339,11 @@ $('#products-container').on('input', '.barcode-input', function () {
             success: function (response) {
                 // Éxito, mostrar mensaje de éxito
                 // setTimeout(() => {
-                    // console.log($('#increaseProductQuantityForm').attr('action'));
-                    // Cerrar el modal
-                    $('#increaseProductQuantityModal').modal('hide');
-                    $('#increaseProductQuantityForm')[0].reset();
-                    toastr.success(response.message);
+                // console.log($('#increaseProductQuantityForm').attr('action'));
+                // Cerrar el modal
+                $('#increaseProductQuantityModal').modal('hide');
+                $('#increaseProductQuantityForm')[0].reset();
+                toastr.success(response.message);
                 // }, 1000);
 
                 // Recargar el DataTable

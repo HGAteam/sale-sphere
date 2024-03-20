@@ -4,7 +4,7 @@
         'breadcrumb' => $breadcrumb,
         ($pageTitle = 'Profile'),
         ($modalLink = '#addUser'),
-        ($modalName = 'Go Back'),
+        ($modalName = trans('Go Back')),
         ($href = '/home/users'),
     ])
 
@@ -15,16 +15,15 @@
                     <div class="text-center widget-profile px-0 border-0">
                         <div class="card-img mx-auto rounded-circle">
                             @if ($user->avatar)
-                                <img src="{{ asset($user->avatar) }}" alt="{{ $user->name . ' ' . $user->lastname }}">
+                                <img src="{{ $user->avatar }}" alt="{{ $user->name . ' ' . $user->lastname }}">
                             @else
-                                <img src="{{ asset('admin/assets/img/user/u1.jpg') }}"
-                                    alt="{{ $user->name . ' ' . $user->lastname }}">
+                                <img src="{{ asset('admin/assets/img/user/u1.jpg') }}" alt="{{ $user->name . ' ' . $user->lastname }}">
                             @endif
 
                         </div>
                         <div class="card-body">
                             <h4 class="py-2 text-dark">{{ $user->name . ' ' . $user->lastname }}</h4>
-                            <p>{{ $user->email }}</p>
+                            {{-- <p>{{ $user->email }}</p> --}}
                             <span class="mt-3 badge badge-primary">{{ __($user->role) }}</span>
                             {{-- <a class="btn btn-primary my-3" href="#">{{ __('Follow') }}</a> --}}
                         </div>
@@ -401,8 +400,7 @@
             var userData = @json($user); // Convertir el objeto PHP a JSON
 
             // Mostrar la imagen del usuario si existe, de lo contrario, mostrar la imagen por defecto
-            var userImage = userData && userData.avatar ? '/' + userData.avatar :
-                '/admin/assets/img/category/clothes.png';
+            var userImage = userData && userData.avatar ? userData.avatar : userData.avatar;
             var defaultImage = document.getElementById('defaultImage');
             defaultImage.src = userImage;
             defaultImage.alt = userData ? userData.name + ' ' + userData.lastname : 'Default Image';

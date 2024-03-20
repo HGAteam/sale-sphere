@@ -29,7 +29,9 @@
                     </div>
                     <div class="card-toolbar">
                         <button type="button" class="m-3 btn btn-warning import">{{__('Import')}}</button>
+                        @if(App\Models\Product::count())
                         <button type="button" class="m-3 btn btn-primary export">{{__('Export')}}</button>
+                        @endif
                         <button type="button" class="m-3 btn btn-secondary template">{{__('Template')}}</button>
                         <button type="button" class="m-3 btn btn-info increase-prices">{{__('Increase Prices')}}</button>
                     </div>

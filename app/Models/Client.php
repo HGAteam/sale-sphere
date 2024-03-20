@@ -24,4 +24,12 @@ class Client extends Model
         'details',
         'deleted_at'
     ];
+
+    public function getImageAttribute($value)
+    {
+        if (!$value) {
+            return asset('/images/blank.png');
+        }
+        return asset($value);
+    }
 }

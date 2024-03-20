@@ -27,9 +27,10 @@
                         @if($stock)
                         <button type="button" class="m-3 btn btn-warning validate-stock">{{ __('Validate Stock') }}</button>
                         @endif
+                        @if($stock != NUll)
                         <button type="button" class="m-3 btn btn-primary export">{{ __('Export') }}</button>
-                        <button type="button"
-                            class="m-3 btn btn-secondary return-stock">{{ __('Return to Stock') }}</button>
+                        <button type="button" class="m-3 btn btn-secondary return-stock">{{ __('Return to Stock') }}</button>
+                        @endif
                     </div>
                 </div>
                 <div class="card-body">

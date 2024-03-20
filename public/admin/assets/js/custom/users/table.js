@@ -59,11 +59,7 @@ $(document).ready(function () {
                     orderable: false,
                     targets: 1,
                     render: function (data) {
-                        if (!data.avatar) {
-                            return `<img class="cat-thumb" src="/admin/assets/img/category/clothes.png" alt="Category Image" />`;
-                        } else {
-                            return `<img class="cat-thumb" src="/${data.avatar}" alt="Category Image" />`;
-                        }
+                            return `<img class="cat-thumb" src="${data.avatar}" alt="User Avatar" />`;
                     },
                 },
                 {
