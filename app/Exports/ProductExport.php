@@ -5,7 +5,6 @@ namespace App\Exports;
 use App\Models\Product;
 use App\Models\Brand;
 use App\Models\Category;
-use App\Models\Warehouse;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithMultipleSheets;
@@ -17,13 +16,13 @@ class ProductExport implements FromCollection, WithMultipleSheets
     public function collection()
     {
         // Obtener productos con relaciones
-        $products = Product::with(['brand', 'category', 'warehouse'])->get();
+        $products = Product::with(['brand', 'category'])->get();
 
         // Mapear datos para incluir información relacionada
         $mappedData = $products->map(function ($product) {
             return [
                 'ID' => $product->id,
-                'Warehouse' => $product->warehouse->name,
+                'Name' => $product->name,
                 'Brand' => $product->brand->name,
                 'Category' => $product->category->name,
                 'Purchase Price' => $product->purchase_price,
@@ -31,8 +30,6 @@ class ProductExport implements FromCollection, WithMultipleSheets
                 'Wholesale Price' => $product->wholesale_price,
                 'Quantity' => $product->quantity,
                 'Unit' => trans("{$product->unit}"),
-                'Name' => $product->name,
-                'Slug' => $product->slug,
                 'Status' => trans("{$product->status}"),
             ];
         });
@@ -50,7 +47,6 @@ class ProductExport implements FromCollection, WithMultipleSheets
         // Otras hojas con relaciones
         $sheets[] = new BrandsSheet();
         $sheets[] = new CategoriesSheet();
-        $sheets[] = new WarehousesSheet();
 
         return $sheets;
     }
@@ -75,9 +71,7 @@ class ProductsSheet implements FromCollection, WithHeadings, WithTitle
         // Encabezados para la hoja de productos
         return [
             'ID',
-            trans('Warehouse'),
             trans('Name'),
-            trans('Slug'),
             trans('Brand'),
             trans('Category'),
             trans('Purchase Price'),
@@ -168,55 +162,5 @@ class CategoriesSheet implements FromCollection, WithHeadings, WithTitle
     public function title(): string
     {
         return 'Categorias'; // Nombre que asignas a la hoja
-    }
-}
-
-class WarehousesSheet implements FromCollection, WithHeadings, WithTitle
-{
-    public function collection()
-    {
-        // Obtener datos de la relación 'warehouse'
-        $data = Warehouse::select('id', 'name', 'slug','location','address', 'status', 'branch_manager','phone', 'mobile', 'cashiers','details')->get();
-        // Mapear los datos y asignar textos según el valor de 'active'
-        $mappedData = $data->map(function ($item) {
-            return [
-                'ID' => $item->id,
-                'Name' => $item->name,
-                'Slug' => $item->slug,
-                'Location' => $item->location,
-                'Address' => $item->address,
-                'Status' => $item->status ? 'Activo' : 'Inactivo',
-                'Branch Manager' => $item->branch_manager,
-                'Phone' => $item->phone,
-                'Mobile' => $item->mobile,
-                'Cashiers' => $item->cashiers,
-                'Details' => $item->details,
-            ];
-        });
-
-        return $mappedData;
-    }
-
-    public function headings(): array
-    {
-        // Encabezados para la hoja de almacenes
-        return [
-            'ID',
-            trans('Name'),
-            trans('Slug'),
-            trans('Location'),
-            trans('Address'),
-            trans('Status'),
-            trans('Branch Manager'),
-            trans('Phone'),
-            trans('Mobile'),
-            trans('Cashiers'),
-            trans('Details'),
-        ];
-    }
-
-    public function title(): string
-    {
-        return 'Almacenes'; // Nombre que asignas a la hoja
     }
 }

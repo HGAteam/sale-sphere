@@ -19,7 +19,7 @@ class BrandSeeder extends Seeder
             \App\Models\Brand::create([
                 'name' => $value['name'],
                 'slug' => Str::slug($value['name']),
-                'status' => 'Draft',
+                'status' => 'Published',
                 'details' => 'Ayuda a que uno sepa donde colocara la marca y evitara errores humanos.'
             ]);
         }
