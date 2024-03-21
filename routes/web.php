@@ -104,8 +104,9 @@ Route::prefix('home')->middleware(['auth'])->group(function(){
         Route::get('data', [App\Http\Controllers\Admin\SupplierController::class, 'data'])->name('data');
         Route::get('edit={id}', [App\Http\Controllers\Admin\SupplierController::class, 'edit'])->name('edit');
         Route::post('', [App\Http\Controllers\Admin\SupplierController::class, 'store'])->name('store');
-        Route::post('delete={id}', [App\Http\Controllers\Admin\SupplierController::class, 'destroy'])->name('destroy');
+        Route::get('profile={id}', [App\Http\Controllers\Admin\SupplierController::class, 'show'])->name('show');
         Route::post('edit={id}', [App\Http\Controllers\Admin\SupplierController::class, 'update'])->name('update');
+        Route::post('delete={id}', [App\Http\Controllers\Admin\SupplierController::class, 'destroy'])->name('destroy');
     });
 
     // Clients
@@ -114,8 +115,9 @@ Route::prefix('home')->middleware(['auth'])->group(function(){
         Route::get('data', [App\Http\Controllers\Admin\ClientController::class, 'data'])->name('data');
         Route::get('edit={id}', [App\Http\Controllers\Admin\ClientController::class, 'edit'])->name('edit');
         Route::post('', [App\Http\Controllers\Admin\ClientController::class, 'store'])->name('store');
-        Route::post('delete={id}', [App\Http\Controllers\Admin\ClientController::class, 'destroy'])->name('destroy');
         Route::post('edit={id}', [App\Http\Controllers\Admin\ClientController::class, 'update'])->name('update');
+        Route::get('profile={id}', [App\Http\Controllers\Admin\ClientController::class, 'show'])->name('show');
+        Route::post('delete={id}', [App\Http\Controllers\Admin\ClientController::class, 'destroy'])->name('destroy');
     });
 
     // Products

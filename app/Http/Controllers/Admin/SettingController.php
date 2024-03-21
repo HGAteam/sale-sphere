@@ -73,7 +73,7 @@ class SettingController extends Controller
                 $image = $request->file('logo');
 
                 // Generar un nombre único para la imagen
-                $imageName = time() . '_' . $image->getClientOriginalName();
+                $imageName = time() . '.' . $image->getClientOriginalExtension();
 
                 // Guardar la imagen original en el sistema de archivos
                 $imagePath = public_path('images/company/') . $imageName;

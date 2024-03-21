@@ -11,6 +11,11 @@ use Illuminate\Validation\ValidationException;
 use Str;
 use File;
 use Intervention\Image\ImageManagerStatic as Image;
+use Illuminate\Database\QueryException;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\SuppliersImport;
+use App\Exports\SuppliersExport;
+
 class SupplierController extends Controller
 {
     /**
@@ -28,7 +33,6 @@ class SupplierController extends Controller
 
         return view('pages.admin.suppliers.index',compact('breadcrumb', 'suppliers'));
     }
-
     public function data()
     {
         $supplierArray = Supplier::all();
@@ -117,7 +121,14 @@ class SupplierController extends Controller
      */
     public function show($id)
     {
-        //
+        $supplier = Supplier::findOrFail($id);
+        $breadcrumb = [
+            ['url' => '/home', 'label' => trans('Home')],
+            ['url' => '/home/suppliers', 'label' => trans('Suppliers')],
+            ['url' => '#', 'label' => $supplier->name.' '.$supplier->lastname],
+        ];
+
+        return view('pages.admin.suppliers.show',compact('breadcrumb','supplier'));
     }
 
     /**
@@ -256,5 +267,56 @@ class SupplierController extends Controller
         } catch (ValidationException $e) {
             return response()->json(['errors' => $e->validator->errors()->toArray()], 422);
         }
+    }
+
+    public function import(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:csv',
+        ]);
+
+        try {
+            $file = $request->file('file');
+
+            // Importar el archivo CSV
+            $import = new SuppliersImport;
+            Excel::import($import, $file);
+
+            // Verificar si hay productos duplicados
+            $duplicates = $import->getDuplicates();
+
+            if (!empty($duplicates)) {
+                return response()->json([
+                    'error' => 'Error durante la importación: Algunos usuarios ya existen en el listado.',
+                    'duplicates' => $duplicates,
+                ], 422);
+            }
+
+            return response()->json(['message' => 'Importación exitosa'], 200);
+        } catch (\Maatwebsite\Excel\Exceptions\NoTypeDetectedException $e) {
+            return response()->json(['error' => 'No se pudo detectar el tipo de archivo.'], 500);
+        } catch (QueryException $e) {
+            $errorCode = $e->getCode();
+
+            // Código de error específico para la violación de la restricción UNIQUE
+            if ($errorCode == '23000') {
+                $errorMessage = 'Error durante la importación: Ya existe un usuario duplicado en el listado.';
+                return response()->json(['error' => $errorMessage], 422);
+            }
+            // Log del error específico de la base de datos
+            // Log::error('Error en la importación: ' . $e->getMessage());
+            // Responder con el mensaje de error general
+            return response()->json(['error' => 'Error durante la importación. Consulta los registros para más detalles.'], 500);
+        } catch (\Exception $e) {
+            $errorMessage = $e->getMessage();
+            // Log del error general
+            // Log::error('Error durante la importación: ' . $errorMessage);
+            // Responder con el mensaje de error general
+            return response()->json(['error' => 'Error durante la importación. Consulta los registros para más detalles.'], 500);
+        }
+    }
+
+    public function export(Request $requet){
+        return Excel::download(new SuppliersExport, 'users.xlsx');
     }
 }

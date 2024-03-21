@@ -47,11 +47,7 @@ $(document).ready(function () {
                     orderable: false,
                     targets: 1,
                     render: function (data) {
-                        if (!data.image) {
-                            return `<img class="cat-thumb" src="/admin/assets/img/category/clothes.png" alt="Category Image" />`;
-                        } else {
-                            return `<img class="cat-thumb" src="/${data.image}" alt="Category Image" />`;
-                        }
+                            return `<img class="cat-thumb" src="${data.image}" alt="Category Image" />`;
                     },
                 },
                 {
@@ -160,7 +156,7 @@ $(document).ready(function () {
                 $('#edit-status').val(categoryData.status);
 
                 // Mostrar la imagen del usuario si existe, de lo contrario, mostrar la imagen por defecto
-                var categoryImage = categoryData.image ? '/' + categoryData.image : '/admin/assets/img/category/clothes.png';
+                var categoryImage = categoryData.image ? categoryData.image : categoryData.image;
                 $('#defaultImageEdit').attr('src', categoryImage);
 
                 // Manejar cambios en el input file para previsualizar la nueva imagen

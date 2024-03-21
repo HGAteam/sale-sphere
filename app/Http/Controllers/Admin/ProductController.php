@@ -7,8 +7,8 @@ use Intervention\Image\ImageManagerStatic as Image;
 use Illuminate\Validation\ValidationException;
 use App\Http\Requests\StoreProductRequest;
 use Maatwebsite\Excel\Facades\Excel;
-use App\Imports\ProductImport;
-use App\Exports\ProductExport;
+use App\Imports\ProductsImport;
+use App\Exports\ProductsExport;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use Carbon\Carbon;
@@ -110,7 +110,7 @@ class ProductController extends Controller
 
             if($request->hasFile('image')){
                 $image = $request->file('image');
-                $imageName = time() . '_' . $image->getClientOriginalName();
+                $imageName = time() . '.' . $image->getClientOriginalExtension();
                 $imagePath = public_path('images/products/') . $imageName;
                 $image->move(public_path('images/products/'), $imageName);
                 $resizedImagePath = 'images/products/' . $imageName;
@@ -202,7 +202,7 @@ class ProductController extends Controller
 
             if($request->file('edit_image')){
                 $image = $request->file('edit_image');
-                $imageName = time() . '_' . $image->getClientOriginalName();
+                $imageName = time() . '.' . $image->getClientOriginalExtension();
                 $imagePath = public_path('images/products/') . $imageName;
                 $image->move(public_path('images/products/'), $imageName);
                 $resizedImagePath = 'images/products/' . $imageName;
@@ -271,7 +271,7 @@ class ProductController extends Controller
             $file = $request->file('file');
 
             // Importar el archivo CSV
-            $import = new ProductImport;
+            $import = new ProductsImport;
             Excel::import($import, $file);
 
             // Verificar si hay productos duplicados
@@ -313,7 +313,7 @@ class ProductController extends Controller
     }
 
     public function export(Request $requet){
-        return Excel::download(new ProductExport, 'products.xlsx');
+        return Excel::download(new ProductsExport, 'products.xlsx');
     }
 
     public function increaseQuantity(Request $request, $id)

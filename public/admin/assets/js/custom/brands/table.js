@@ -47,11 +47,7 @@ $(document).ready(function () {
                     orderable: false,
                     targets: 1,
                     render: function (data) {
-                        if (!data.image) {
-                            return `<img class="cat-thumb" src="/admin/assets/img/category/clothes.png" alt="Brand Image" />`;
-                        } else {
-                            return `<img class="cat-thumb" src="/${data.image}" alt="Brand Image" />`;
-                        }
+                            return `<img class="cat-thumb" src="${data.image}" alt="Brand Image" />`;
                     },
                 },
                 {
@@ -160,7 +156,7 @@ $(document).ready(function () {
                 $('#edit-status').val(brandData.status);
 
                 // Mostrar la imagen del usuario si existe, de lo contrario, mostrar la imagen por defecto
-                var brandImage = brandData.image ? '/' + brandData.image : '/admin/assets/img/category/clothes.png';
+                var brandImage = brandData.image ? brandData.image : brandData.image;
                 $('#defaultImageEdit').attr('src', brandImage);
 
                 // Manejar cambios en el input file para previsualizar la nueva imagen

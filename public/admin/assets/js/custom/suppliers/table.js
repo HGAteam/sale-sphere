@@ -166,7 +166,7 @@ $(document).ready(function () {
                     render: function (data, row) {
                         return `<div class="btn-group mb-1">
                                                 <button type="button"
-                                                    class="btn btn-outline-success info-supplier">${lang.t('Info')}</button>
+                                                    class="btn btn-outline-success info-supplier" data-id="${data.id}">${lang.t('Info')}</button>
                                                 <button type="button"
                                                     class="btn btn-outline-success dropdown-toggle dropdown-toggle-split"
                                                     data-bs-toggle="dropdown" aria-haspopup="true"
@@ -275,8 +275,99 @@ $(document).ready(function () {
     });
 
     // Modal Info
-    // supplierDataTable.on('click', '.info-supplier', function (e) {
-    //     var supplierId = $(this).data('id');
-    //     window.location.href = "/home/suppliers/profile=" + supplierId;
-    // });
+    supplierDataTable.on('click', '.info-supplier', function (e) {
+        var supplierId = $(this).data('id');
+        window.location.href = "/home/suppliers/profile=" + supplierId;
+    });
+
+    // Download Template
+    $('.template').on('click', function () {
+        // URL de la plantilla que se va a descargar
+        var templateUrl = '/admin/templates/suppliers.csv'; // Reemplaza con la ruta correcta de tu plantilla
+
+        // Crear un enlace temporal para la descarga
+        var link = document.createElement('a');
+        link.href = templateUrl;
+        link.download = 'plantilla_suppliers.csv'; // Nombre del archivo a descargar
+
+        // Agregar el enlace al DOM y simular un clic para iniciar la descarga
+        document.body.appendChild(link);
+        link.click();
+
+        // Eliminar el enlace del DOM después de la descarga
+        document.body.removeChild(link);
+    });
+
+    // Import
+    $('.import').on('click', function () {
+        var fileInput = $('<input type="file" accept=".csv">');
+        fileInput.hide();
+        $('body').append(fileInput);
+        fileInput.click();
+
+        fileInput.on('change', function () {
+            if (this.files.length > 0) {
+                var file = this.files[0];
+                var fileName = file.name;
+                var fileExtension = fileName.split('.').pop().toLowerCase();
+
+                if (fileExtension === 'csv') {
+                    var importButton = $(this);
+                    importButton.attr('disabled', true)
+                        .html('<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>Loading...');
+
+                    // Obtener el token CSRF
+                    var csrfToken = $('meta[name="csrf-token"]').attr('content');
+
+                    // Crear formData y agregar el token CSRF
+                    var formData = new FormData();
+                    formData.append('file', file);
+                    formData.append('_token', csrfToken);
+
+                    $.ajax({
+                        url: '/home/suppliers/import',
+                        method: 'POST',
+                        data: formData,
+                        contentType: false,
+                        processData: false,
+                        success: function (response) {
+                            console.log(response.message);
+                            // Puedes recargar la tabla aquí
+                            if (typeof supplierDataTable !== 'undefined') {
+                                toastr.success('Importación exitosa');
+                                setTimeout(function () {
+                                    // supplierDataTable.DataTable().ajax.reload();
+                                    window.location.reload();
+                                }, 1500); // Tiempo en milisegundos antes de recargar
+                            }
+                        },
+                        error: function (xhr, status, error) {
+                            console.error(xhr.responseJSON.error);
+
+                            if (xhr.status === 422) {
+                                // Mostrar mensaje Toastr de error específico para duplicados
+                                toastr.error('Error al importar: ' + xhr.responseJSON.error);
+                            } else {
+                                // Mostrar mensaje Toastr de error general
+                                toastr.error('Error al importar. Consulta los registros para más detalles.');
+                            }
+                        },
+                        complete: function () {
+                            // Restablecer el botón de importación y eliminar el input de archivo
+                            importButton.removeAttr('disabled').html('Importar');
+                            fileInput.remove();
+                        }
+                    });
+                } else {
+                    // Mostrar mensaje Toastr de advertencia
+                    toastr.warning('Por favor, seleccione un archivo CSV válido.');
+                }
+            }
+        });
+    });
+
+    // Export
+    $('.export').on('click', function () {
+        window.location.href = '/home/suppliers/export';
+    });
 });

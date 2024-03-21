@@ -453,7 +453,7 @@ $(document).ready(function () {
                 var existingImageName = data.image ? data.image.split('/').pop() : `${lang.t('No image selected')}`;
                 $('#editImageName').text(`${lang.t('Existing Image')}` + ': ' + existingImageName);
                 // Mostrar la imagen existente
-                var productImage = data.image ? '/' + data.image : '/admin/assets/img/category/clothes.png';
+                var productImage = data.image ? data.image : data.image;
                 $('#editImagePreview').attr('src', productImage);
                 $('#editProductModal form').attr({
                     'action': '/home/products/edit=' + productId, // Ajusta la URL de acción según tus necesidades

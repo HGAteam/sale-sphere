@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Exports\UserExport;
+use App\Exports\UsersExport;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Http\Requests\UpdatePersonalInfoRequest;
-use App\Imports\UserImport;
+use App\Imports\UsersImport;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
@@ -301,7 +301,7 @@ class UserController extends Controller
             $file = $request->file('file');
 
             // Importar el archivo CSV
-            $import = new UserImport;
+            $import = new UsersImport;
             Excel::import($import, $file);
 
             // Verificar si hay productos duplicados
@@ -339,6 +339,6 @@ class UserController extends Controller
     }
 
     public function export(Request $requet){
-        return Excel::download(new UserExport, 'users.xlsx');
+        return Excel::download(new UsersExport, 'users.xlsx');
     }
 }

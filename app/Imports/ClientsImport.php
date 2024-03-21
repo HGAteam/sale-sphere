@@ -7,14 +7,14 @@ use Maatwebsite\Excel\Concerns\ToCollection;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Concerns\Importable;
-use App\Models\User;
+use App\Models\Client;
 use Str;
 
-class UsersImport implements ToCollection
+class ClientsImport implements ToCollection
 {
     use Importable;
 
-    protected $importedUsers = [];
+    protected $importedClients = [];
     protected $duplicates = [];
 
     /**
@@ -23,22 +23,24 @@ class UsersImport implements ToCollection
     public function collection(Collection $collection)
     {
         foreach ($collection as $row) {
-            $userData = [
+            $clientData = [
                 'name' => $row[0],
                 'lastname' => $row[1],
-                'role' => $row[2],
-                'phone' => $row[3],
-                'mobile' => $row[4],
-                'address' => $row[5],
-                'location' => $row[6],
-                'email' => $row[7],
+                'email' => $row[2],
+                'dni' => $row[3],
+                'address' => $row[4],
+                'location' => $row[5],
+                'phone' => $row[6],
+                'mobile' => $row[7],
+                'details' => $row[8],
             ];
 
             // Validación de los datos
-            $validator = Validator::make($userData, [
+            $validator = Validator::make($clientData, [
                 'name' => 'required|string',
                 'lastname' => 'required|string',
-                'role' => 'required|string',
+                'dni' => 'required|string',
+                'location' => 'required|string',
                 'status' => 'required|string',
                 'email' => 'required|email|unique:users,email',
             ]);
@@ -50,30 +52,30 @@ class UsersImport implements ToCollection
             }
 
             // Verificar si el usuario ya existe
-            $existingUser = User::where('name', $row[0])->first();
+            $existingClient = Client::where('name', $row[0])->first();
 
-            if ($existingUser) {
-                $this->duplicates[] = $userData;
+            if ($existingClient) {
+                $this->duplicates[] = $clientData;
             } else {
                 // Generar el slug a partir del campo name
                 $slug = Str::slug($row[0]);
 
                 // Crear el producto
-                User::create([
+                Client::create([
                     'name' => $row[0],
                     'slug' => $slug,
                     'lastname' => $row[1],
-                    'role' => $row[2],
-                    'phone' => $row[3],
-                    'mobile' => $row[4],
-                    'address' => $row[5],
-                    'location' => $row[6],
-                    'email' => $row[7],
-                    'password' => Hash::make($row[0].$row[1]),
+                    'email' => $row[2],
+                    'dni' => $row[3],
+                    'address' => $row[4],
+                    'location' => $row[5],
+                    'phone' => $row[6],
+                    'mobile' => $row[7],
+                    'details' => $row[8],
                 ]);
 
                 // Agregar los datos del user al array de importación
-                $this->importedUsers[] = $userData;
+                $this->importedClients[] = $clientData;
             }
         }
     }

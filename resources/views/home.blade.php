@@ -53,22 +53,22 @@
             <!-- Sales Graph -->
             <div id="user-acquisition" class="card card-default">
                 <div class="card-header">
-                    <h2>Sales Report</h2>
+                    <h2>{{__('Sales Report')}}</h2>
                 </div>
                 <div class="card-body">
                     <ul class="nav nav-tabs nav-style-border justify-content-between justify-content-lg-start border-bottom"
                         role="tablist">
                         <li class="nav-item">
                             <a class="nav-link active" data-bs-toggle="tab" href="#todays" role="tab"
-                                aria-selected="true">Today's</a>
+                                aria-selected="true">{{__("Today's")}}</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" data-bs-toggle="tab" href="#monthly" role="tab"
-                                aria-selected="false">Monthly </a>
+                                aria-selected="false">{{__('Monthly')}} </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" data-bs-toggle="tab" href="#yearly" role="tab"
-                                aria-selected="false">Yearly</a>
+                                aria-selected="false">{{__('Yearly')}}</a>
                         </li>
                     </ul>
                     <div class="tab-content pt-4" id="salesReport">
@@ -87,23 +87,21 @@
             <!-- Doughnut Chart -->
             <div class="card card-default">
                 <div class="card-header justify-content-center">
-                    <h2>Orders Overview</h2>
+                    <h2>{{__('Orders Overview')}}</h2>
                 </div>
                 <div class="card-body">
                     <canvas id="doChart"></canvas>
                 </div>
-                <a href="#" class="pb-5 d-block text-center text-muted"><i class="mdi mdi-download mr-2"></i> Download
-                    overall report</a>
+                <a href="#" class="pb-5 d-block text-center text-muted"><i class="mdi mdi-download mr-2"></i> {{__('Download overall report')}}</a>
                 <div class="card-footer d-flex flex-wrap bg-white p-0">
                     <div class="col-6">
                         <div class="p-20">
                             <ul class="d-flex flex-column justify-content-between">
                                 <li class="mb-2"><i class="mdi mdi-checkbox-blank-circle-outline mr-2"
-                                        style="color: #4c84ff"></i>Order Completed</li>
+                                        style="color: #4c84ff"></i>{{__('Order Completed')}}</li>
                                 <li class="mb-2"><i class="mdi mdi-checkbox-blank-circle-outline mr-2"
-                                        style="color: #80e1c1 "></i>Order Unpaid</li>
-                                <li><i class="mdi mdi-checkbox-blank-circle-outline mr-2" style="color: #ff7b7b "></i>Order
-                                    returned</li>
+                                        style="color: #80e1c1 "></i>{{__('Order Unpaid')}}</li>
+                                <li><i class="mdi mdi-checkbox-blank-circle-outline mr-2" style="color: #ff7b7b "></i>{{__('Order returned')}}</li>
                             </ul>
                         </div>
                     </div>
@@ -111,11 +109,10 @@
                         <div class="p-20">
                             <ul class="d-flex flex-column justify-content-between">
                                 <li class="mb-2"><i class="mdi mdi-checkbox-blank-circle-outline mr-2"
-                                        style="color: #8061ef"></i>Order Pending</li>
+                                        style="color: #8061ef"></i>{{__('Order Pending')}}</li>
                                 <li class="mb-2"><i class="mdi mdi-checkbox-blank-circle-outline mr-2"
-                                        style="color: #ffa128"></i>Order Canceled</li>
-                                <li><i class="mdi mdi-checkbox-blank-circle-outline mr-2" style="color: #7be6ff"></i>Order
-                                    Broken</li>
+                                        style="color: #ffa128"></i>{{__('Order Canceled')}}</li>
+                                <li><i class="mdi mdi-checkbox-blank-circle-outline mr-2" style="color: #7be6ff"></i>{{__('Order Broken')}}</li>
                             </ul>
                         </div>
                     </div>
@@ -131,7 +128,7 @@
                 <div class="no-gutters">
                     <div>
                         <div class="card-header justify-content-between">
-                            <h2>User Activity</h2>
+                            <h2>{{__('User Activity')}}</h2>
                             <div class="date-range-report ">
                                 <span></span>
                             </div>
@@ -144,7 +141,7 @@
                             </div>
                         </div>
                         <div class="card-footer d-flex flex-wrap bg-white border-top">
-                            <a href="#" class="text-uppercase py-3">In-Detail Overview</a>
+                            <a href="#" class="text-uppercase py-3">{{__('In-Detail Overview')}}</a>
                         </div>
                     </div>
                 </div>
@@ -153,13 +150,13 @@
         <div class="col-xl-4 col-md-12 p-b-15">
             <div class="card card-default">
                 <div class="card-header flex-column align-items-start">
-                    <h2>Current Users</h2>
+                    <h2>{{__('Current Users')}}</h2>
                 </div>
                 <div class="card-body">
                     <canvas id="currentUser" class="chartjs"></canvas>
                 </div>
                 <div class="card-footer d-flex flex-wrap bg-white border-top">
-                    <a href="#" class="text-uppercase py-3">In-Detail Overview</a>
+                    <a href="#" class="text-uppercase py-3">{{__('In-Detail Overview')}}</a>
                 </div>
             </div>
         </div>
@@ -170,7 +167,7 @@
             <!-- Recent Order Table -->
             <div class="card card-table-border-none card-default recent-orders" id="recent-orders">
                 <div class="card-header justify-content-between">
-                    <h2>Recent Orders</h2>
+                    <h2>{{__('Recent Orders')}}</h2>
                     <div class="date-range-report">
                         <span></span>
                     </div>
@@ -179,12 +176,12 @@
                     <table class="table card-table table-responsive table-responsive-large" style="width:100%">
                         <thead>
                             <tr>
-                                <th>Order ID</th>
-                                <th>Product Name</th>
-                                <th class="d-none d-lg-table-cell">Units</th>
-                                <th class="d-none d-lg-table-cell">Order Date</th>
-                                <th class="d-none d-lg-table-cell">Order Cost</th>
-                                <th>Status</th>
+                                <th>{{__('Order ID')}}</th>
+                                <th>{{(__('Product Name'))}}</th>
+                                <th class="d-none d-lg-table-cell">{{__('Units')}}</th>
+                                <th class="d-none d-lg-table-cell">{{__('Order Date')}}</th>
+                                <th class="d-none d-lg-table-cell">{{__('Order Cost')}}</th>
+                                <th>{{__('Status')}}</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -333,7 +330,7 @@
             <!-- Top Sell Table -->
             <div class="card card-default Sold-card-table">
                 <div class="card-header justify-content-between">
-                    <h2>Sold by Items</h2>
+                    <h2>{{__('Sold by Items')}}</h2>
                     <div class="tools">
                         <button class="text-black-50 mr-2 font-size-20"><i class="mdi mdi-cached"></i></button>
                         <div class="dropdown show d-inline-block widget-dropdown">
@@ -426,7 +423,7 @@
 
                 </div>
                 <div class="card-footer d-flex flex-wrap bg-white">
-                    <a href="#" class="text-uppercase py-3">View Report</a>
+                    <a href="#" class="text-uppercase py-3">{{__('View Report')}}</a>
                 </div>
             </div>
         </div>
@@ -437,7 +434,7 @@
             <!-- New Customers -->
             <div class="card ec-cust-card card-table-border-none card-default">
                 <div class="card-header justify-content-between ">
-                    <h2>New Customers</h2>
+                    <h2>{{__('New Customers')}}</h2>
                     <div>
                         <button class="text-black-50 mr-2 font-size-20">
                             <i class="mdi mdi-cached"></i>
@@ -448,9 +445,9 @@
                                 aria-expanded="false" data-display="static">
                             </a>
                             <ul class="dropdown-menu dropdown-menu-right">
-                                <li class="dropdown-item"><a href="#">Action</a></li>
-                                <li class="dropdown-item"><a href="#">Another action</a></li>
-                                <li class="dropdown-item"><a href="#">Something else here</a></li>
+                                <li class="dropdown-item"><a href="#">{{__('Action')}}</a></li>
+                                <li class="dropdown-item"><a href="#">{{__('Another action')}}</a></li>
+                                <li class="dropdown-item"><a href="#">{{__('Something else here')}}</a></li>
                             </ul>
                         </div>
                     </div>
@@ -462,14 +459,13 @@
                                 <td>
                                     <div class="media">
                                         <div class="media-image mr-3 rounded-circle">
-                                            <a href="profile.html"><img class="profile-img rounded-circle w-45"
-                                                    src="{{ asset('admin/assets/img/user/u1.jpg') }}"
-                                                    alt="customer image"></a>
+                                            <a href="#">
+                                                <img class="profile-img rounded-circle w-45" src="images/blank.png" alt="Profile Image">
+                                            </a>
                                         </div>
                                         <div class="media-body align-self-center">
-                                            <a href="profile.html">
-                                                <h6 class="mt-0 text-dark font-weight-medium">Selena
-                                                    Wagner</h6>
+                                            <a href="#">
+                                                <h6 class="mt-0 text-dark font-weight-medium">Selena Wagner</h6>
                                             </a>
                                             <small>@selena.oi</small>
                                         </div>
@@ -482,14 +478,11 @@
                                 <td>
                                     <div class="media">
                                         <div class="media-image mr-3 rounded-circle">
-                                            <a href="profile.html"><img class="profile-img rounded-circle w-45"
-                                                    src="{{ asset('admin/assets/img/user/u2.jpg') }}"
-                                                    alt="customer image"></a>
+                                            <a href="#"><img class="profile-img rounded-circle w-45" src="{{ asset('/images/blank.png') }}" alt="customer image"></a>
                                         </div>
                                         <div class="media-body align-self-center">
-                                            <a href="profile.html">
-                                                <h6 class="mt-0 text-dark font-weight-medium">Walter
-                                                    Reuter</h6>
+                                            <a href="#">
+                                                <h6 class="mt-0 text-dark font-weight-medium">Walte Reuter</h6>
                                             </a>
                                             <small>@walter.me</small>
                                         </div>
@@ -502,14 +495,11 @@
                                 <td>
                                     <div class="media">
                                         <div class="media-image mr-3 rounded-circle">
-                                            <a href="profile.html"><img class="profile-img rounded-circle w-45"
-                                                    src="{{ asset('admin/assets/img/user/u3.jpg') }}"
-                                                    alt="customer image"></a>
+                                            <a href="#"><img class="profile-img rounded-circle w-45" src="{{ asset('/images/blank.png') }}" alt="customer image"></a>
                                         </div>
                                         <div class="media-body align-self-center">
-                                            <a href="profile.html">
-                                                <h6 class="mt-0 text-dark font-weight-medium">Larissa
-                                                    Gebhardt</h6>
+                                            <a href="#">
+                                                <h6 class="mt-0 text-dark font-weight-medium">Lariss Gebhardt</h6>
                                             </a>
                                             <small>@larissa.gb</small>
                                         </div>
@@ -522,14 +512,11 @@
                                 <td>
                                     <div class="media">
                                         <div class="media-image mr-3 rounded-circle">
-                                            <a href="profile.html"><img class="profile-img rounded-circle w-45"
-                                                    src="{{ asset('admin/assets/img/user/u4.jpg') }}"
-                                                    alt="customer image"></a>
+                                            <a href="#"><img class="profile-img rounded-circle w-45" src="{{ asset('/images/blank.png') }}" alt="customer image"></a>
                                         </div>
                                         <div class="media-body align-self-center">
-                                            <a href="profile.html">
-                                                <h6 class="mt-0 text-dark font-weight-medium">Albrecht
-                                                    Straub</h6>
+                                            <a href="#">
+                                                <h6 class="mt-0 text-dark font-weight-medium">Albrech Straub</h6>
                                             </a>
                                             <small>@albrech.as</small>
                                         </div>
@@ -542,14 +529,11 @@
                                 <td>
                                     <div class="media">
                                         <div class="media-image mr-3 rounded-circle">
-                                            <a href="profile.html"><img class="profile-img rounded-circle w-45"
-                                                    src="{{ asset('admin/assets/img/user/u5.jpg') }}"
-                                                    alt="customer image"></a>
+                                            <a href="#"><img class="profile-img rounded-circle w-45" src="{{ asset('/images/blank.png') }}" alt="customer image"></a>
                                         </div>
                                         <div class="media-body align-self-center">
-                                            <a href="profile.html">
-                                                <h6 class="mt-0 text-dark font-weight-medium">Leopold
-                                                    Ebert</h6>
+                                            <a href="#">
+                                                <h6 class="mt-0 text-dark font-weight-medium">Leopol Ebert</h6>
                                             </a>
                                             <small>@leopold.et</small>
                                         </div>
@@ -562,14 +546,11 @@
                                 <td>
                                     <div class="media">
                                         <div class="media-image mr-3 rounded-circle">
-                                            <a href="profile.html"><img class="profile-img rounded-circle w-45"
-                                                    src="{{ asset('admin/assets/img/user/u3.jpg') }}"
-                                                    alt="customer image"></a>
+                                            <a href="#"><img class="profile-img rounded-circle w-45" src="{{ asset('/images/blank.png') }}" alt="customer image"></a>
                                         </div>
                                         <div class="media-body align-self-center">
-                                            <a href="profile.html">
-                                                <h6 class="mt-0 text-dark font-weight-medium">Larissa
-                                                    Gebhardt</h6>
+                                            <a href="#">
+                                                <h6 class="mt-0 text-dark font-weight-medium">Lariss Gebhardt</h6>
                                             </a>
                                             <small>@larissa.gb</small>
                                         </div>
@@ -585,10 +566,10 @@
         </div>
 
         <div class="col-xl-7">
-            <!-- Top Products -->
+            <!-- {{__('Top Products')}} -->
             <div class="card card-default ec-card-top-prod">
                 <div class="card-header justify-content-between">
-                    <h2>Top Products</h2>
+                    <h2>{{__('Top Products')}}</h2>
                     <div>
                         <button class="text-black-50 mr-2 font-size-20"><i class="mdi mdi-cached"></i></button>
                         <div class="dropdown show d-inline-block widget-dropdown">
@@ -626,7 +607,7 @@
                     </div>
                     <div class="row media d-flex pt-15px pb-15px">
                         <div class="col-lg-3 col-md-3 col-2 media-image align-self-center rounded">
-                            <a href="#"><img src="{{ asset('admin/assets/img/products/p2.jpg') }}"
+                            <a href="#"><img src={{('admin/assets/img/products/p1.jpg')}}
                                     alt="customer image"></a>
                         </div>
                         <div class="col-lg-9 col-md-9 col-10 media-body align-self-center ec-pos">

@@ -70,7 +70,7 @@ class CategoryController extends Controller
 
         if($request->file('image')){
             $image = $request->file('image');
-            $imageName = time() . '_' . $image->getClientOriginalName();
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
             $imagePath = public_path('images/categories/') . $imageName;
             $image->move(public_path('images/categories/'), $imageName);
             $resizedImagePath = 'images/categories/' . $imageName;
@@ -152,7 +152,7 @@ class CategoryController extends Controller
             // Actualizar la imagen solo si se proporciona una nueva imagen
             if ($request->file('edit_image') && $request->file('edit_image') != null && $request->file('edit_image') != '') {
                 $image = $request->file('edit_image');
-                $imageName = time() . '_' . $image->getClientOriginalName();
+                $imageName = time() . '.' . $image->getClientOriginalExtension();
                 $imagePath = public_path('images/categories/') . $imageName;
                 $image->move(public_path('images/categories/'), $imageName);
                 $resizedImagePath = 'images/categories/' . $imageName;

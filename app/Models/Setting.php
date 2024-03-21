@@ -20,4 +20,12 @@ class Setting extends Model
         'phone',
         'mobile'
     ];
+
+    public function getLogoAttribute($value)
+    {
+        if (!$value) {
+            return asset('/images/blank.png');
+        }
+        return asset($value);
+    }
 }
