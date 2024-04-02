@@ -3,7 +3,8 @@
     <!-- Data Tables -->
     <link href="{{ asset('admin/assets/plugins/data-tables/datatables.bootstrap5.min.css') }}" rel='stylesheet'>
     <link href="{{ asset('admin/assets/plugins/data-tables/responsive.datatables.min.css') }}" rel='stylesheet'>
-@endsection
+   <link href="{{asset('admin/assets/css/extra.css')}}" rel="stylesheet">
+   @endsection
 
 @section('content')
     @include('layouts.admin.partials.breadcrumb', [
@@ -22,9 +23,9 @@
                         <h1>{{__('User List')}}</h1>
                     </div>
                     <div class="card-toolbar">
-                        <button type="button" class="m-3 btn btn-warning import">{{__('Import')}}</button>
-                        <button type="button" class="m-3 btn btn-primary export">{{__('Export')}}</button>
-                        <button type="button" class="m-3 btn btn-secondary template">{{__('Template')}}</button>
+                        <button type="button" class="m-3 btn btn-warning btn-responsive import">{{__('Import')}}</button>
+                        <button type="button" class="m-3 btn btn-primary btn-responsive export">{{__('Export')}}</button>
+                        <button type="button" class="m-3 btn btn-secondary btn-responsive template">{{__('Template')}}</button>
                     </div>
                 </div>
                 <div class="card-body">

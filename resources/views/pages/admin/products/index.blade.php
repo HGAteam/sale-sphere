@@ -6,8 +6,8 @@
     <link href="{{ asset('admin/assets/plugins/data-tables/datatables/buttons/css/buttons.bootstrap5.min.css') }}"
         rel="stylesheet">
     <link href="{{ asset('admin/assets/plugins/select2/dist/css/select2.min.css') }}" rel="stylesheet" />
-@endsection
-
+   <link href="{{asset('admin/assets/css/extra.css')}}" rel="stylesheet">
+    @endsection
 @section('content')
     @include('layouts.admin.partials.breadcrumb', [
         'breadcrumb' => $breadcrumb,
@@ -28,12 +28,12 @@
                         <h1>{{__('Product List')}}</h1>
                     </div>
                     <div class="card-toolbar">
-                        <button type="button" class="m-3 btn btn-warning import">{{__('Import')}}</button>
+                        <button type="button" class="m-3 btn btn-warning btn-responsive import">{{__('Import')}}</button>
                         @if(App\Models\Product::count())
-                        <button type="button" class="m-3 btn btn-primary export">{{__('Export')}}</button>
+                        <button type="button" class="m-3 btn btn-primary btn-responsive export">{{__('Export')}}</button>
                         @endif
-                        <button type="button" class="m-3 btn btn-secondary template">{{__('Template')}}</button>
-                        <button type="button" class="m-3 btn btn-info increase-prices">{{__('Increase Prices')}}</button>
+                        <button type="button" class="m-3 btn btn-secondary btn-responsive template">{{__('Template')}}</button>
+                        <button type="button" class="m-3 btn btn-info btn-responsive increase-prices">{{__('Increase Prices')}}</button>
                     </div>
                 </div>
                 <div class="card-body">

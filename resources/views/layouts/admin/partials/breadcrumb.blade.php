@@ -17,7 +17,7 @@
             @endforeach
         </p>
     </div>
-    <div>
+    <div class="breadcrumb">
         @if (!$href && $modalLink != '#')
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="{{ $modalLink }}">
                 {{ $modalName }}
@@ -27,7 +27,6 @@
                 {{ $modalName }}
             </a>
         @endif
-
         @if (isset($modalLink2) && $modalLink2 != '#' && ($href2 || isset($modalName2)))
             @if (!$href2 && isset($modalName2))
                 <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="{{ $modalLink2 }}">

@@ -1,0 +1,28 @@
+
+@media (max-width: 575.98px) {
+    .btn-responsive {
+        display: block !important;
+        width: 100%;
+        /* Opcional: para ocupar todo el ancho */
+        margin-bottom: 5px;
+        /* Opcional: para agregar un espacio entre botones */
+    }
+
+    .breadcrumb-wrapper {
+        flex-direction: column; /* Cambiar dirección de los elementos a columna */
+        align-items: flex-start; /* Alinear elementos a la izquierda */
+    }
+
+    .breadcrumb {
+        margin-top: 10px;
+        margin-bottom: 10px; /* Espacio entre cada elemento del breadcrumb */
+    }
+
+    .breadcrumb>.btn{
+        display: block !important;
+        width: 100%;
+        /* Opcional: para ocupar todo el ancho */
+        margin-bottom: 5px;
+        /* Opcional: para agregar un espacio entre botones */
+    }
+}
