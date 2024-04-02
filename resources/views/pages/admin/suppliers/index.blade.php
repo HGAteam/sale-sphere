@@ -17,7 +17,7 @@
 
     <div class="row">
         <div class="col-12">
-            <div class="ec-vendor-list card card-default">
+            <div class="ec-cat-list card card-default">
                 <div class="card-header py-0">
                     <div class="card-title">
                         <h1>{{__('Supplier List')}}</h1>
