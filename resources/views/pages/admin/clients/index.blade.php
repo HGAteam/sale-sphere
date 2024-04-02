@@ -1,9 +1,9 @@
 @extends('layouts.app')
 @section('styles')
     <!-- Data Tables -->
+    <link href="{{asset('admin/assets/css/extra.css')}}" rel="stylesheet">
     <link href="{{ asset('admin/assets/plugins/data-tables/datatables.bootstrap5.min.css') }}" rel='stylesheet'>
     <link href="{{ asset('admin/assets/plugins/data-tables/responsive.datatables.min.css') }}" rel='stylesheet'>
-   <link href="{{asset('admin/assets/css/extra.css')}}" rel="stylesheet">
    @endsection
 
 @section('content')
