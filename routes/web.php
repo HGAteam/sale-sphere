@@ -25,7 +25,7 @@ Route::get('/translations/{locale}', function ($locale) {
 
 Route::get('/', function () {
     return view('welcome');
-})->name('welcome')->middleware(['auth']);
+})->name('welcome');
 
 
 Auth::routes();

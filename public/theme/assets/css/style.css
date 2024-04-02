@@ -18,7 +18,7 @@
     - Common
     - Popup Model
     - Breadcrumb
-03. Layout 
+03. Layout
     - Header Section
     - Mainslider Section
     - Product Tab Section
@@ -48,7 +48,7 @@
     - Cart Page
     - Compare Page
     - Track Order Page
-    - Checkout Page    
+    - Checkout Page
     - Elements Tabs Page
     - Elements Categories Page
     - Elements Buttons Page
@@ -9399,6 +9399,7 @@ li {
     padding-right: 15px;
     padding-left: 15px;
   }
+
 }
 @media (min-width: 768px) {
   .container-md {
@@ -12130,6 +12131,7 @@ li {
   }
 }
 @media (min-width: 1200px) {
+
   h1 {
     font-size: 2.5rem;
   }
@@ -29762,7 +29764,7 @@ input[type=email]:focus::-webkit-input-placeholder {
    vendor Page CSS
    	- Single Vendor
    	- Multi Vendor
-   	- Vendor Sidebar 
+   	- Vendor Sidebar
    	- Vendor Dashboard
    	- Vendor Upload
    	- Vendor Profile
@@ -31969,4 +31971,3 @@ input[type=email]:focus::-webkit-input-placeholder {
   font-size: 16px;
   color: #777;
 }
-/*# sourceMappingURL=style.css.map */

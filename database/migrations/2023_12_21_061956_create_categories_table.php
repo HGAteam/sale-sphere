@@ -20,6 +20,9 @@ class CreateCategoriesTable extends Migration
             $table->string('image')->nullable();
             $table->enum('status',['Published','Unpublished','Draft','Deleted'])->default('Published');
             $table->text('details')->nullable();
+            // Columna para la clave externa de la categoría padre
+            $table->unsignedBigInteger('parent_id')->nullable();
+            $table->foreign('parent_id')->references('id')->on('categories')->onDelete('cascade');
             // Opcional si deseas tener una marca de tiempo de eliminación
             $table->timestamp('deleted_at')->nullable();
             $table->timestamps();

@@ -13,7 +13,8 @@ class Category extends Model
         'slug',
         'image',
         'status',
-        'details'
+        'details',
+        'parent_id',
     ];
 
     public function getImageAttribute($value)
@@ -22,5 +23,22 @@ class Category extends Model
             return asset('/images/blank.png');
         }
         return asset($value);
+    }
+
+    // Relación con la categoría padre
+    public function parent()
+    {
+        return $this->belongsTo(Category::class, 'parent_id');
+    }
+
+    // Relación con las categorías hijas
+    public function children()
+    {
+        return $this->hasMany(Category::class, 'parent_id');
+    }
+
+    public function products()
+    {
+        return $this->hasMany(Product::class);
     }
 }

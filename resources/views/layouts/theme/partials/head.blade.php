@@ -12,7 +12,7 @@
      <!-- site Favicon -->
      <link rel="icon" href="{{ asset('admin/assets/img/logo/icon.png') }}" sizes="32x32" />
      <link rel="apple-touch-icon" href="{{asset('theme/assets/images/favicon/favicon.png')}}" />
-     <meta name="msapplication-TileImage" content="assets/images/favicon/favicon.png')}}" />
+     <meta name="msapplication-TileImage" content="{{asset('theme/assets/images/favicon/favicon.png')}}')}}" />
 
      @yield('meta-tags')
 

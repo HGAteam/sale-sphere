@@ -6,47 +6,35 @@
                 <!-- Sidebar Category Block -->
                 <div class="ec-sidebar-block">
                     <div class="ec-sb-title">
-                        <h3 class="ec-sidebar-title">Category<button class="ec-close">×</button></h3>
+                        <h3 class="ec-sidebar-title">{{ __('Category') }}<button class="ec-close">×</button></h3>
                     </div>
-                    <div class="ec-sb-block-content">
-                        <ul>
-                            <li>
-                                <div class="ec-sidebar-block-item"><img src="{{asset('theme/assets/images/icons/dress-8.png')}}"
-                                        class="svg_img')}}" alt="drink" />Cothes</div>
-                                <ul style="display: block;">
-                                    <li>
-                                        <div class="ec-sidebar-sub-item"><a
-                                                href="shop-left-sidebar-col-3.html">Shirt <span
-                                                    title="Available Stock">- 25</span></a>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="ec-sidebar-sub-item"><a
-                                                href="shop-left-sidebar-col-3.html">shorts & jeans <span
-                                                    title="Available Stock">- 52</span></a>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="ec-sidebar-sub-item"><a
-                                                href="shop-left-sidebar-col-3.html">jacket<span
-                                                    title="Available Stock">- 500</span></a>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="ec-sidebar-sub-item"><a
-                                                href="shop-left-sidebar-col-3.html">dress & frock <span
-                                                    title="Available Stock">- 35</span></a>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="ec-sb-block-content">
+                    @foreach (App\Models\Category::orderBy('name', 'ASC')->where('parent_id', null)->whereHas('children')->get() as $key => $category)
+                        <div class="ec-sb-block-content">
+                            <ul>
+                                <li>
+                                    <div class="ec-sidebar-block-item" style="font-size:14px;">
+                                        {{-- <img src="{{ asset('theme/assets/images/icons/dress-8.png') }}" class="svg_img" alt="{{ $category->name }}" /> --}}
+                                        {{ $category->name }}
+                                    </div>
+                                    <ul @if($key+1==1) style="display: block;" @else @endif>
+                                        @foreach ($category->children as $cat)
+                                            <li>
+                                                <div class="ec-sidebar-sub-item">
+                                                    <a href="#" style="font-size:12px;">{{ $cat->name }}
+                                                        <span title="{{ $cat->status }}">{{ $cat->products->count() }}</span></a>
+                                                </div>
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    @endforeach
+                    {{-- <div class="ec-sb-block-content">
                         <ul>
                             <li>
                                 <div class="ec-sidebar-block-item"><img src="{{asset('theme/assets/images/icons/shoes-8.png')}}"
-                                        class="svg_img')}}" alt="drink" />Footwear</div>
+                                        class="svg_img" alt="drink" />Footwear</div>
                                 <ul>
                                     <li>
                                         <div class="ec-sidebar-sub-item"><a
@@ -80,7 +68,7 @@
                         <ul>
                             <li>
                                 <div class="ec-sidebar-block-item"><img src="{{asset('theme/assets/images/icons/jewelry-8.png')}}"
-                                        class="svg_img')}}" alt="drink" />jewelry</div>
+                                        class="svg_img" alt="drink" />jewelry</div>
                                 <ul>
                                     <li>
                                         <div class="ec-sidebar-sub-item"><a
@@ -108,7 +96,7 @@
                         <ul>
                             <li>
                                 <div class="ec-sidebar-block-item"><img src="{{asset('theme/assets/images/icons/perfume-8.png')}}"
-                                        class="svg_img')}}" alt="drink" />perfume</div>
+                                        class="svg_img" alt="drink" />perfume</div>
                                 <ul>
                                     <li>
                                         <div class="ec-sidebar-sub-item"><a
@@ -141,7 +129,7 @@
                         <ul>
                             <li>
                                 <div class="ec-sidebar-block-item"><img src="{{asset('theme/assets/images/icons/cosmetics-8.png')}}"
-                                        class="svg_img')}}" alt="drink" />cosmetics</div>
+                                        class="svg_img" alt="drink" />cosmetics</div>
                                 <ul>
                                     <li>
                                         <div class="ec-sidebar-sub-item"><a
@@ -174,7 +162,7 @@
                         <ul>
                             <li>
                                 <div class="ec-sidebar-block-item"><img src="{{asset('theme/assets/images/icons/glasses-8.png')}}"
-                                        class="svg_img')}}" alt="drink" />glasses</div>
+                                        class="svg_img" alt="drink" />glasses</div>
                                 <ul>
                                     <li>
                                         <div class="ec-sidebar-sub-item"><a
@@ -196,7 +184,7 @@
                         <ul>
                             <li>
                                 <div class="ec-sidebar-block-item"><img src="{{asset('theme/assets/images/icons/bag-8.png')}}"
-                                        class="svg_img')}}" alt="drink" />bags</div>
+                                        class="svg_img" alt="drink" />bags</div>
                                 <ul>
                                     <li>
                                         <div class="ec-sidebar-sub-item"><a
@@ -224,12 +212,12 @@
                                 </ul>
                             </li>
                         </ul>
-                    </div>
+                    </div> --}}
                 </div>
                 <!-- Sidebar Category Block -->
             </div>
         </div>
-        <div class="ec-sidebar-slider-cat">
+        {{-- <div class="ec-sidebar-slider-cat">
             <div class="ec-sb-slider-title">Best Sellers</div>
             <div class="ec-sb-pro-sl">
                 <div>
@@ -396,6 +384,6 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
     </div>
 </div>
