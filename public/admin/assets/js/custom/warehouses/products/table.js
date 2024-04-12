@@ -302,6 +302,8 @@ $(document).ready(function () {
                 $this.closest('.product').hide().remove(); // Remover el elemento del DOM
 
                 toastr.success(response.message);
+                // Recargar la tabla
+                warehouseDataTable.DataTable().ajax.reload();
 
                 // Verificar si es el último elemento
                 if ($('#products-container .product').length === 0) {
@@ -347,8 +349,7 @@ $(document).ready(function () {
                 // }, 1000);
 
                 // Recargar el DataTable
-                window.location.reload();
-                // warehouseDataTable.DataTable().ajax.reload();
+                warehouseDataTable.DataTable().ajax.reload();
             },
             error: function (xhr) {
                 // Mostrar el mensaje de error real y detalles
