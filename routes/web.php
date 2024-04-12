@@ -137,4 +137,15 @@ Route::prefix('home')->middleware(['auth'])->group(function(){
         Route::get('/get-products', [App\Http\Controllers\Admin\ProductController::class, 'searchProducts'])->name('search_products');
     });
 
+    // Account
+    Route::prefix('account')->name('account.')->group(function(){
+        Route::get('', function () {
+            $breadcrumb = [
+                ['url' => '/', 'label' => trans('Home')],
+            ];
+            $user = Auth::user();
+            return view('pages.admin.account.index',compact('breadcrumb','user'));
+        })->name('my_account');
+    });
+
 });

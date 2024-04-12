@@ -2,10 +2,10 @@
 @section('content')
     @include('layouts.admin.partials.breadcrumb', [
         'breadcrumb' => $breadcrumb,
-        ($pageTitle = 'Profile'),
+        ($pageTitle = trans('My Profile')),
         ($modalLink = '#addUser'),
-        ($modalName = 'Go Back'),
-        ($href = '/home/users'),
+        ($modalName = trans('Go Back')),
+        ($href = URL::previous()),
     ])
 
     <div class="card bg-white profile-content">
@@ -14,19 +14,12 @@
                 <div class="profile-content-left profile-left-spacing">
                     <div class="text-center widget-profile px-0 border-0">
                         <div class="card-img mx-auto rounded-circle">
-                            @if ($user->avatar)
                                 <img src="{{ asset($user->avatar) }}" alt="{{ $user->name . ' ' . $user->lastname }}">
-                            @else
-                                <img src="{{ asset('admin/assets/img/user/u1.jpg') }}"
-                                    alt="{{ $user->name . ' ' . $user->lastname }}">
-                            @endif
-
                         </div>
                         <div class="card-body">
                             <h4 class="py-2 text-dark">{{ $user->name . ' ' . $user->lastname }}</h4>
                             <p>{{ $user->email }}</p>
                             <span class="mt-3 badge badge-primary">{{ __($user->role) }}</span>
-                            {{-- <a class="btn btn-primary my-3" href="#">{{ __('Follow') }}</a> --}}
                         </div>
                     </div>
 
@@ -445,8 +438,7 @@
             var userData = @json($user); // Convertir el objeto PHP a JSON
 
             // Mostrar la imagen del usuario si existe, de lo contrario, mostrar la imagen por defecto
-            var userImage = userData && userData.avatar ? '/' + userData.avatar :
-                '/admin/assets/img/category/clothes.png';
+            var userImage = userData.avatar;
             var defaultImage = document.getElementById('defaultImage');
             defaultImage.src = userImage;
             defaultImage.alt = userData ? userData.name + ' ' + userData.lastname : 'Default Image';
@@ -471,7 +463,7 @@
                 } else {
                     // Si se deja en blanco, volver a mostrar la imagen actual
                     defaultImage.src = userImage;
-                    customFileLabel.innerText = 'Choose file';
+                    customFileLabel.innerText = trans('Choose file');
                 }
             });
 

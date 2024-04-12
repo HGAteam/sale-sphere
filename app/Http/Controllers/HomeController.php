@@ -24,7 +24,7 @@ class HomeController extends Controller
     public function index()
     {
         $breadcrumb = [
-            ['url' => '/', 'label' => 'Home'],
+            ['url' => '/', 'label' => trans('Home')],
             // ['url' => '/productos', 'label' => 'Brands'],
             // ['url' => '/productos/zapatos', 'label' => 'Zapatos'],
         ];

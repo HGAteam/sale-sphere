@@ -5,7 +5,7 @@
         <!-- search form -->
         <div class="search-form d-lg-inline-block">
             <div class="input-group">
-                <input type="text" name="query" id="search-input" class="form-control" placeholder="search.."
+                <input type="text" name="query" id="search-input" class="form-control" placeholder="{{__('Search')}}..."
                     autofocus autocomplete="off" />
                 <button type="button" name="search" id="search-btn" class="btn btn-flat">
                     <i class="mdi mdi-magnify"></i>
@@ -34,20 +34,20 @@
                             </div>
                         </li>
                         <li>
-                            <a href="user-profile.html">
+                            <a href="{{route('account.my_account')}}">
                                 <i class="mdi mdi-account"></i> {{ __('My Profile') }}
                             </a>
                         </li>
                         <li>
                             <a href="#">
-                                <i class="mdi mdi-email"></i> Message
+                                <i class="mdi mdi-email"></i> {{__('Messages')}}
                             </a>
                         </li>
                         <li>
-                            <a href="#"> <i class="mdi mdi-diamond-stone"></i> Projects </a>
+                            <a href="#"> <i class="mdi mdi-diamond-stone"></i> {{__('Applications')}} </a>
                         </li>
                         <li class="right-sidebar-in">
-                            <a href="javascript:0"> <i class="mdi mdi-settings-outline"></i> Setting </a>
+                            <a href="javascript:0"> <i class="mdi mdi-settings-outline"></i> {{__('Settings')}} </a>
                         </li>
                         <li class="dropdown-footer">
                             <a href="{{ route('logout') }}"
@@ -78,7 +78,7 @@
                                 <li class="nav-item mx-3 my-0 py-0">
                                     <a href="#" class="nav-link active pb-3" id="home2-tab" data-bs-toggle="tab"
                                         data-bs-target="#home2" role="tab" aria-controls="home2"
-                                        aria-selected="true">All (10)</a>
+                                        aria-selected="true">{{__('All')}} (10)</a>
                                 </li>
 
                                 <li class="nav-item mx-3 my-0 py-0">

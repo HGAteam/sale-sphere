@@ -199,7 +199,7 @@ $(document).ready(function () {
                 $('#edit-location').val(userData.location);
 
                 // Mostrar la imagen del usuario si existe, de lo contrario, mostrar la imagen por defecto
-                var userImage = userData.avatar ? '/' + userData.avatar : '/admin/assets/img/category/clothes.png';
+                var userImage = userData.avatar ? userData.avatar : userData.avatar;
                 $('#defaultImage').attr('src', userImage);
 
                 // Manejar cambios en el input file para previsualizar la nueva imagen

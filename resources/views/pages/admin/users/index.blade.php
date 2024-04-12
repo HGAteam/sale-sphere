@@ -200,7 +200,7 @@
                             <label for="coverImageEdit" class="col-sm-4 col-lg-4">{{ __('User Image') }}
                                 <div class="">
                                     <!-- Imagen por defecto -->
-                                    <img id="defaultImage" class="mb-5" src="/admin/assets/img/category/clothes.png"
+                                    <img id="defaultImage" class="mb-5" src="{{asset('images/blank.png')}}"
                                         alt="Default Image" style="max-width: 100%; max-height: 150px;">
                                 </div>
                             </label>

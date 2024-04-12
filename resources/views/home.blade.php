@@ -3,7 +3,7 @@
 @section('content')
 @include('layouts.admin.partials.breadcrumb', [
     'breadcrumb' => $breadcrumb,
-    ($pageTitle = 'Home'),
+    ($pageTitle = trans('Home')),
     ($modalLink = '#'),
     ($modalName = ''),
     ($href = ''),
