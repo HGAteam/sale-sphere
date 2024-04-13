@@ -73,7 +73,7 @@ $(document).ready(function () {
                     orderable: false,
                     targets: 3,
                     render: function (data) {
-                        return data.role;
+                        return `${lang.t(data.role)}`;
                     },
                 },
                 {
@@ -88,8 +88,9 @@ $(document).ready(function () {
                     targets: 5,
                     render: function (data) {
                         if (!data.phone) {
-                            return '<span class="badge badge-danger">No Phone</span>';
-                        } else {
+                            return `<span class="badge badge-danger">${lang.t('No Phone')}</span>`;
+                        return `${lang.t(data.role)}`;
+                    } else {
                             return data.phone;
                         }
                     },
@@ -99,7 +100,7 @@ $(document).ready(function () {
                     targets: 6,
                     render: function (data) {
                         if (!data.mobile) {
-                            return '<span class="badge badge-danger">No Mobile</span>';
+                            return `<span class="badge badge-danger">${lang.t('No Mobile')}</span>`;
                         } else {
                             return data.mobile;
                         }
@@ -110,9 +111,9 @@ $(document).ready(function () {
                     targets: 7,
                     render: function (data) {
                         if (data.status == 0) {
-                            return '<span class="badge badge-secondary">Inactive</span>';
+                            return `<span class="badge badge-secondary">${lang.t('Inactive')}</span>`;
                         } else {
-                            return '<span class="badge badge-success">Active</span>';
+                            return `<span class="badge badge-success">${lang.t('Active')}</span>`;
                         }
                     },
                 },
