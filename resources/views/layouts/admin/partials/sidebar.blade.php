@@ -14,8 +14,8 @@
                 <!-- Dashboard -->
                 <li class="{{ request()->is('home') ? 'active' : '' }}">
                     <a class="sidenav-item-link" href="{{ route('home') }}">
-                        <i class="mdi mdi-view-dashboard-outline"></i>
-                        <span class="nav-text">{{ __('Dashboard') }}</span>
+                        <i class="mdi mdi-home-outline"></i>
+                        <span class="nav-text">{{ __('Home') }}</span>
                     </a>
                     <hr>
                 </li>
@@ -23,7 +23,7 @@
                 <!-- Users -->
                 <li class="{{request()->is('home/users*')? 'active' : ''}}">
                     <a class="sidenav-item-link" href="{{route('users.index')}}">
-                        <i class="mdi mdi-account-group"></i>
+                        <i class="mdi mdi-account-group-outline"></i>
                         <span class="nav-text">{{__('Users')}}</span>
                     </a>
                 </li>

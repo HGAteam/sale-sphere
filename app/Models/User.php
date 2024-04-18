@@ -71,7 +71,7 @@ class User extends Authenticatable
     public function getAvatarAttribute($value)
     {
         if (!$value) {
-            return asset('images/blank.png');
+            return asset('images/users/blank.png');
         }
         return asset($value);
     }

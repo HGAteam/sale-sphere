@@ -18,7 +18,7 @@ class Brand extends Model
     public function getImageAttribute($value)
     {
         if (!$value) {
-            return asset('/images/blank.png');
+            return asset('images/brands/default.jpg');
         }
         return asset($value);
     }

@@ -20,7 +20,7 @@ class Category extends Model
     public function getImageAttribute($value)
     {
         if (!$value) {
-            return asset('/admin/assets/img/category/default.png');
+            return asset('images/categories/default.jpg');
         }
         return asset($value);
     }

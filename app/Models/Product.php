@@ -29,7 +29,7 @@ class Product extends Model
     public function getImageAttribute($value)
     {
         if (!$value) {
-            return asset('/admin/assets/img/products/default.jpg');
+            return asset('images/products/default.jpg');
         }
         return asset($value);
     }

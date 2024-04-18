@@ -6,7 +6,7 @@
             <div class="card">
                 <div class="card-header bg-primary">
                     <div class="ec-brand justify-content-center">
-                        <a href="{{ route('welcome') }}" title="{{ config('app.name') }}">
+                        <a href="javascript:void(0)" title="{{ config('app.name') }}">
                             <img class="ec-brand-icon" src="{{ asset('admin/assets/img/logo/logo-login.png') }}"
                                 alt="" />
                         </a>

@@ -22,12 +22,12 @@
                 <!-- User Account -->
                 <li class="dropdown user-menu">
                     <button class="dropdown-toggle nav-link ec-drop" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img src="{{ asset('admin/assets/img/user/user.png') }}" class="user-image" alt="User Image" />
+                        <img src="{{ Auth::user()->avatar }}" class="user-image" alt="User Image" />
                     </button>
                     <ul class="dropdown-menu dropdown-menu-right ec-dropdown-menu">
                         <!-- User image -->
                         <li class="dropdown-header">
-                            <img src="{{ asset('admin/assets/img/user/user.png') }}" class="img-circle"
+                            <img src="{{ Auth::user()->avatar }}" class="img-circle"
                                 alt="User Image" />
                             <div class="d-inline-block">
                                 {{ Auth::user()->name.' '.Auth::user()->lastname }} <small class="pt-1">{{ auth()->user()->email }}</small>
@@ -44,10 +44,10 @@
                             </a>
                         </li>
                         <li>
-                            <a href="#"> <i class="mdi mdi-diamond-stone"></i> {{__('Applications')}} </a>
+                            <a href="{{route('apps.index')}}"> <i class="mdi mdi-diamond-stone"></i> {{__('Applications')}} </a>
                         </li>
                         <li class="right-sidebar-in">
-                            <a href="javascript:0"> <i class="mdi mdi-settings-outline"></i> {{__('Settings')}} </a>
+                            <a href="javascript:0"> <i class="mdi mdi-settings-outline"></i> {{__('Environment Settings')}} </a>
                         </li>
                         <li class="dropdown-footer">
                             <a href="{{ route('logout') }}"
@@ -607,7 +607,7 @@
                             </a>
                         </li>
                         <li class="dropdown-footer">
-                            <a class="text-center" href="#"> View All </a>
+                            <a class="text-center" href="#"> {{__('View All')}} </a>
                         </li>
                     </ul>
                 </li>

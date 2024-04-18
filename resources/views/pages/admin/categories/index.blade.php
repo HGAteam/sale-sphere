@@ -29,7 +29,7 @@
                                 <label for="coverImage" class="col-sm-4 col-lg-4">{{ __('Category Image') }}
                                     <div class="">
                                         <!-- Imagen por defecto -->
-                                        <img id="defaultImage" class="mb-5" src="/admin/assets/img/category/default.png"
+                                        <img id="defaultImage" class="mb-5" src=""
                                             alt="Default Image" style="max-width: 100%; max-height: 150px;">
                                     </div>
                                 </label>
@@ -194,7 +194,7 @@
     <script>
         $(document).ready(function() {
             // Mostrar la imagen por defecto
-            var userImage = '/admin/assets/img/category/default.png';
+            var userImage = '/images/categories/default.jpg';
             $('#defaultImage').attr('src', userImage);
 
             // Manejar cambios en el input file para previsualizar la nueva imagen

@@ -1,4 +1,5 @@
 @extends('layouts.app')
+
 @section('content')
     @include('layouts.admin.partials.breadcrumb', [
         'breadcrumb' => $breadcrumb,
@@ -115,11 +116,12 @@
     <!-- End Register -->
 
 @endsection
+
 @section('scripts')
     <script>
         $(document).ready(function() {
             // Mostrar la imagen existente si hay una
-            var logoUrl = '{{ $setting->logo ? asset($setting->logo) : asset('/admin/assets/img/category/clothes.png') }}';
+            var logoUrl = '{{ $setting->logo }}';
             $('#defaultImage').attr('src', logoUrl);
 
             // Mostrar el nombre del archivo si existe

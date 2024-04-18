@@ -16,7 +16,7 @@ $(document).ready(function () {
             ajax: {
                 url: "/home/products/data",
             },
-            "aLengthMenu": [[20, 30, 50, 75, -1], [20, 30, 50, 75, "All"]],
+            "aLengthMenu": [[20, 30, 50, 75, -1], [20, 30, 50, 75, lang.t("All")]],
             "pageLength": 20,
             "dom": '<"row justify-content-between top-information"lf>rt<"row justify-content-between bottom-information"ip><"clear">',
             language: {

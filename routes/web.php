@@ -23,11 +23,6 @@ Route::get('/translations/{locale}', function ($locale) {
     return response()->file($path);
 });
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('welcome');
-
-
 Auth::routes();
 
 Route::prefix('home')->middleware(['auth'])->group(function(){
@@ -38,6 +33,12 @@ Route::prefix('home')->middleware(['auth'])->group(function(){
     Route::prefix('settings')->name('settings.')->group(function(){
         Route::get('', [App\Http\Controllers\Admin\SettingController::class, 'index'])->name('index');
         Route::post('', [App\Http\Controllers\Admin\SettingController::class, 'store'])->name('store');
+    });
+
+    // Apps
+    Route::prefix('apps')->name('apps.')->group(function(){
+        Route::get('', [App\Http\Controllers\Admin\AppController::class, 'index'])->name('index');
+        // Route::post('', [App\Http\Controllers\Admin\SettingController::class, 'store'])->name('store');
     });
 
     // Users
@@ -61,7 +62,11 @@ Route::prefix('home')->middleware(['auth'])->group(function(){
         Route::get('', [App\Http\Controllers\Admin\WarehouseController::class, 'index'])->name('index');
         Route::post('', [App\Http\Controllers\Admin\WarehouseController::class, 'store'])->name('store');
         Route::get('data', [App\Http\Controllers\Admin\WarehouseController::class, 'data'])->name('data');
+        Route::post('/home/warehouses/restore/{id}', 'WarehouseController@restore');
+        // Ruta para eliminar el almacén
         Route::post('delete={id}', [App\Http\Controllers\Admin\WarehouseController::class, 'destroy'])->name('destroy');
+        // Ruta para restaurar el almacén
+        Route::post('restore={id}', [App\Http\Controllers\Admin\WarehouseController::class, 'restore'])->name('restore');
         Route::get('edit={id}', [App\Http\Controllers\Admin\WarehouseController::class, 'edit'])->name('edit');
         Route::post('edit={id}', [App\Http\Controllers\Admin\WarehouseController::class, 'update'])->name('update');
         Route::post('edit={id}/info', [App\Http\Controllers\Admin\WarehouseController::class, 'updateInfo'])->name('update_info');
@@ -118,6 +123,7 @@ Route::prefix('home')->middleware(['auth'])->group(function(){
         Route::post('edit={id}', [App\Http\Controllers\Admin\ClientController::class, 'update'])->name('update');
         Route::get('profile={id}', [App\Http\Controllers\Admin\ClientController::class, 'show'])->name('show');
         Route::post('delete={id}', [App\Http\Controllers\Admin\ClientController::class, 'destroy'])->name('destroy');
+        Route::post('restore={id}', [App\Http\Controllers\Admin\ClientController::class, 'restore'])->name('restore');
     });
 
     // Products
@@ -148,4 +154,9 @@ Route::prefix('home')->middleware(['auth'])->group(function(){
         })->name('my_account');
     });
 
+});
+
+// Ruta de redirección
+Route::fallback(function () {
+    return redirect('/home');
 });

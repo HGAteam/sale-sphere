@@ -11,7 +11,7 @@ $(document).ready(function () {
             ajax: {
                 url: "/home/clients/data",
             },
-            "aLengthMenu": [[20, 30, 50, 75, -1], [20, 30, 50, 75, "All"]],
+            "aLengthMenu": [[20, 30, 50, 75, -1], [20, 30, 50, 75, lang.t("All")]],
             "pageLength": 20,
             "dom": '<"row justify-content-between top-information"lf>rt<"row justify-content-between bottom-information"ip><"clear">',
             columns: [
@@ -153,57 +153,69 @@ $(document).ready(function () {
                     orderable: false,
                     targets: 11,
                     className: 'text-end',
-                    render: function (data, row) {
-                        return `<div class="btn-group mb-1">
-                                                <button type="button"
-                                                    class="btn btn-outline-success info-client" data-id="${data.id}">${lang.t('Info')}</button>
-                                                <button type="button"
-                                                    class="btn btn-outline-success dropdown-toggle dropdown-toggle-split"
-                                                    data-bs-toggle="dropdown" aria-haspopup="true"
-                                                    aria-expanded="false" data-display="static">
-                                                    <span class="sr-only">${lang.t('Info')}</span>
-                                                </button>
+                    render: function (data) {
+                        // Verifica si el estado es inactivo para decidir el texto del botón
+                        var deleteButtonText = data.status === 0 ? 'Restore' : 'Delete';
 
-                                                <div class="dropdown-menu">
-                                                    <a class="dropdown-item edit-client" data-id="${data.id}" href="#">${lang.t('Edit')}</a>
-                                                    <a class="dropdown-item delete-client" data-id="${data.id}" data-status="${data.status}" href="#">${lang.t('Delete')}</a>
-                                                </div>
-                                            </div>`;
+                        return `<div class="btn-group mb-1">
+                            <button type="button" class="btn btn-outline-success info-client" data-id="${data.id}">${lang.t('Products')}</button>
+                            <button type="button"
+                                class="btn btn-outline-success dropdown-toggle dropdown-toggle-split"
+                                data-bs-toggle="dropdown" aria-haspopup="true"
+                                aria-expanded="false" data-display="static">
+                                <span class="sr-only">${lang.t('Products')}</span>
+                            </button>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item edit-client" data-id="${data.id}" href="#">${lang.t('Edit')}</a>
+                                <a class="dropdown-item delete-client" data-id="${data.id}" data-status="${data.status}" href="#">${lang.t(deleteButtonText)}</a>
+                            </div>
+                        </div>`;
                     },
                 }
             ],
         });
     }
 
-    // Eliminar
+    // Eliminar almacén
     clientDataTable.on('click', '.delete-client', function (e) {
         e.preventDefault();
 
         var clientId = $(this).data('id');
         var clientStatus = $(this).data('status');
 
-        // Verificar si el proveedor está activo antes de permitir la eliminación
-        if (clientStatus === "Active") {
-            // Realizar la solicitud POST para cambiar el estado del proveedor
-            $.ajax({
-                url: '/home/clients/delete=' + clientId,
-                method: 'POST',
-                data: {
-                    _token: $('meta[name="csrf-token"]').attr('content'),
-                    id: clientId
-                },
-                success: function (response) {
-                    // Actualizar la tabla después de cambiar el estado del proveedor
-                    clientDataTable.DataTable().ajax.reload();
-                },
-                error: function (xhr) {
-                    console.error(lang.t('Error when changing client status') + ':', xhr.responseText);
-                }
-            });
-        } else {
-            // El proveedor ya está inactivo, muestra un mensaje o realiza otra acción
-            console.log('Este proveedor ya está inactivo.');
-        }
+        var confirmMessage = clientStatus === 1 ? lang.t('Are you sure you want to delete this client?') : lang.t('Do you want to restore this client?');
+
+        Swal.fire({
+            title: lang.t('Confirm'),
+            text: confirmMessage,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: lang.t('Yes'),
+            cancelButtonText: lang.t('Cancel')
+        }).then((result) => {
+            if (result.isConfirmed) {
+                var url = clientStatus === 1 ? '/home/clients/delete=' + clientId : '/home/clients/restore=' + clientId;
+
+                // Realizar la solicitud POST para cambiar el estado del almacén
+                $.ajax({
+                    url: url,
+                    method: 'POST',
+                    data: {
+                        _token: $('meta[name="csrf-token"]').attr('content'),
+                        id: clientId
+                    },
+                    success: function (response) {
+                        // Actualizar la tabla después de cambiar el estado del almacén
+                        clientDataTable.DataTable().ajax.reload();
+                        Swal.fire(lang.t('Éxito'), response.message, 'success');
+                    },
+                    error: function (xhr) {
+                        console.error(lang.t('Error when changing the client status:'), xhr.responseText);
+                        Swal.fire(lang.t('Error'), lang.t('There was an error changing the client status.'), 'error');
+                    }
+                });
+            }
+        });
     });
 
     // Completa los campos con los datos correspondientes
@@ -228,7 +240,7 @@ $(document).ready(function () {
                 $('#edit-location').val(clientData.location);
                 $('#edit-details').val(clientData.details);
 
-                var clientImage = clientData.image ? '/' + clientData.image : '/admin/assets/img/category/clothes.png';
+                var clientImage = clientData.image ? clientData.image : clientData.image;
                 $('#defaultImageEdit').attr('src', clientImage);
 
                 // Manejar cambios en el input file para previsualizar la nueva imagen

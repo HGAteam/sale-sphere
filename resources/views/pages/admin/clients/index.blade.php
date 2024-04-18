@@ -1,10 +1,11 @@
 @extends('layouts.app')
+
 @section('styles')
-    <!-- Data Tables -->
-    <link href="{{asset('admin/assets/css/extra.css')}}" rel="stylesheet">
-    <link href="{{ asset('admin/assets/plugins/data-tables/datatables.bootstrap5.min.css') }}" rel='stylesheet'>
-    <link href="{{ asset('admin/assets/plugins/data-tables/responsive.datatables.min.css') }}" rel='stylesheet'>
-   @endsection
+<!-- Data Tables -->
+<link href="{{ asset('admin/assets/plugins/data-tables/datatables.bootstrap5.min.css') }}" rel='stylesheet'>
+<link href="{{ asset('admin/assets/plugins/data-tables/responsive.datatables.min.css') }}" rel='stylesheet'>
+<link href="{{asset('admin/assets/css/extra.css')}}" rel="stylesheet">
+@endsection
 
 @section('content')
     @include('layouts.admin.partials.breadcrumb', [
@@ -190,7 +191,7 @@
                                 <div class="">
                                     <!-- Imagen por defecto -->
                                     <img id="defaultImageEdit" class="mb-5"
-                                        src="/admin/assets/img/category/clothes.png" alt="Default Image"
+                                        src="" alt="Default Image"
                                         style="max-width: 100%; max-height: 150px;">
                                 </div>
                             </label>
@@ -300,6 +301,7 @@
         </div>
     </div>
 @endsection
+
 @section('scripts')
     <script src="{{ asset('admin/assets/plugins/data-tables/jquery.datatables.min.js') }}"></script>
     <script src="{{ asset('admin/assets/plugins/data-tables/datatables.bootstrap5.min.js') }}"></script>
@@ -307,13 +309,12 @@
     <script src="{{ asset('admin/assets/js/custom/clients/table.js') }}"></script>
     <script src="{{ asset('admin/assets/js/custom/clients/add.js') }}"></script>
     <script src="{{ asset('admin/assets/js/custom/clients/update.js') }}"></script>
-
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
         $(document).ready(function() {
             // Mostrar la imagen por defecto
-            var userImage = '/admin/assets/img/category/clothes.png';
+            var userImage = '/images/clients/blank.png';
             $('#defaultImage').attr('src', userImage);
 
             // Manejar cambios en el input file para previsualizar la nueva imagen

@@ -19,7 +19,7 @@ class CreateClientsTable extends Migration
             $table->string('slug');
             $table->string('lastname');
             $table->string('email');
-            $table->enum('status',['Active','Inactive','Deleted'])->default('Active');
+            $table->boolean('status')->default(1);
             $table->string('dni')->nullable();
             $table->string('image')->nullable();
             $table->string('address')->nullable();

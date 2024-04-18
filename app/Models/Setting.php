@@ -24,7 +24,7 @@ class Setting extends Model
     public function getLogoAttribute($value)
     {
         if (!$value) {
-            return asset('/images/blank.png');
+            return asset('/images/company/default.jpg');
         }
         return asset($value);
     }

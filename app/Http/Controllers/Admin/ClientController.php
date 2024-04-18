@@ -227,21 +227,23 @@ class ClientController extends Controller
      */
     public function destroy($id)
     {
-        try {
-            $client = Client::findOrFail($id);
+        $client = Client::findOrFail($id);
+        $client->update([
+            'status' => 0,
+            'deleted_at' => now(),
+        ]);
+        return response()->json(['message' => trans('Client marked as inactive.')]);
+    }
 
-            // Cambiar el estado a "Inactive" o "Deleted" según tu columna 'status'
-            $client->update([
-                'status' => 'Deleted',
-                'deleted_at' => now(), // Opcional, para establecer la marca de tiempo de eliminación
-            ]);
-
-             // Puedes devolver una respuesta JSON o redirigir a la página que desees
-            return response()->json(['message' => trans('Client status changed to Deleted')]);
-
-        } catch (ValidationException $e) {
-            return response()->json(['errors' => $e->validator->errors()->toArray()], 422);
-        }
+    // Método en el controlador para restaurar el almacén
+    public function restore($id)
+    {
+        $client = Client::findOrFail($id);
+        $client->update([
+            'status' => 1,
+            'deleted_at' => null,
+        ]);
+        return response()->json(['message' => trans('Client restored.')]);
     }
 
     public function import(Request $request)

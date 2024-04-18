@@ -27,7 +27,7 @@ class Supplier extends Model
     public function getImageAttribute($value)
     {
         if (!$value) {
-            return asset('/images/blank.png');
+            return asset('images/suppliers/blank.png');
         }
         return asset($value);
     }

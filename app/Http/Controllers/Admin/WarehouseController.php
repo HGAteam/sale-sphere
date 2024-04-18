@@ -172,18 +172,26 @@ class WarehouseController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+   // Método en el controlador para eliminar el almacén
     public function destroy($id)
     {
         $warehouse = Warehouse::findOrFail($id);
-
-        // Cambiar el estado a "Inactive" o "Deleted" según tu columna 'status'
         $warehouse->update([
             'status' => 0,
-            'deleted_at' => now(), // Opcional, para establecer la marca de tiempo de eliminación
+            'deleted_at' => now(),
         ]);
+        return response()->json(['message' => trans('Warehouse marked as inactive.')]);
+    }
 
-        // Puedes devolver una respuesta JSON o redirigir a la página que desees
-        return response()->json(['message' => trans('User status changed to Inactive')]);
+    // Método en el controlador para restaurar el almacén
+    public function restore($id)
+    {
+        $warehouse = Warehouse::findOrFail($id);
+        $warehouse->update([
+            'status' => 1,
+            'deleted_at' => null,
+        ]);
+        return response()->json(['message' => trans('Warehouse restored.')]);
     }
 
     public function getProducts($id){
