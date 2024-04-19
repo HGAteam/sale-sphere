@@ -22,6 +22,9 @@ class UserSeeder extends Seeder
             'role' => 'Admin',
             'email' => 'webmaster@hgateam.com',
             'password' => Hash::make('Admin#34067!'),
+            'mobile' => '+5493813201216',
+            'address' => 'Alsina 1358',
+            'location' => 'San Miguel de Tucuman, Tucumán, Argentina',
         ]);
 
         \App\Models\User::create([
@@ -31,6 +34,9 @@ class UserSeeder extends Seeder
             'role' => 'Owner',
             'email' => 'jorge@hgateam.com',
             'password' => Hash::make('password'),
+            'mobile' => '+5493813613214',
+            'address' => 'Alsina',
+            'location' => 'San Miguel de Tucuman, Tucumán, Argentina',
         ]);
 
         \App\Models\User::create([
@@ -40,6 +46,9 @@ class UserSeeder extends Seeder
             'role' => 'Cashier',
             'email' => 'sebastian.ignes@hgateam.com',
             'password' => Hash::make('password'),
+            'mobile' => '+5493813308207',
+            'address' => 'Alsina',
+            'location' => 'San Miguel de Tucuman, Tucumán, Argentina',
         ]);
     }
 }

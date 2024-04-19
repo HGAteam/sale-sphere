@@ -1,10 +1,10 @@
 $(document).ready(function () {
     "use strict";
 
-    var clientDataTable = $("#clients-data-table")
+    var customerDataTable = $("#customers-data-table")
     $("#btnSave").click(function () {
         $.ajax({
-            url: "/home/clients", // Tu ruta de almacenamiento
+            url: "/home/customers", // Tu ruta de almacenamiento
             method: "POST",
             data: new FormData($("#add_new")[0]), // Asegúrate de asignar un ID a tu formulario
             contentType: false,
@@ -16,7 +16,7 @@ $(document).ready(function () {
                     title: response.message,
                 });
                   // Recargar el DataTable
-                  clientDataTable.DataTable().ajax.reload();
+                  customerDataTable.DataTable().ajax.reload();
                   $('#add_new')[0].reset();
             },
             error: function (xhr) {
@@ -51,6 +51,6 @@ $(document).ready(function () {
     $("#btnCancel").click(function () {
 
         // Cierra el modal
-        $("#addClient").modal("hide");
+        $("#addCustomer").modal("hide");
     });
 });

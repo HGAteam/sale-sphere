@@ -68,11 +68,11 @@
                     </a>
                 </li>
 
-                <!-- Clients -->
-                <li class="{{request()->is('home/clients*')? 'active' : ''}}">
-                    <a class="sidenav-item-link" href="{{route('clients.index')}}">
+                <!-- Customers -->
+                <li class="{{request()->is('home/customers*')? 'active' : ''}}">
+                    <a class="sidenav-item-link" href="{{route('customers.index')}}">
                         <i class="mdi mdi-account-group-outline"></i>
-                        <span class="nav-text">{{__('Clients')}}</span>
+                        <span class="nav-text">{{__('Customers')}}</span>
                     </a>
                 </li>
 

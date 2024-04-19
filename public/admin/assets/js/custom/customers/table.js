@@ -1,15 +1,15 @@
 $(document).ready(function () {
     "use strict";
 
-    var clientDataTable = $("#clients-data-table");
+    var customerDataTable = $("#customers-data-table");
 
-    if (clientDataTable.length !== 0) {
-        clientDataTable.DataTable({
+    if (customerDataTable.length !== 0) {
+        customerDataTable.DataTable({
             info: false,
             order: [],
             scrollX: true,
             ajax: {
-                url: "/home/clients/data",
+                url: "/home/customers/data",
             },
             "aLengthMenu": [[20, 30, 50, 75, -1], [20, 30, 50, 75, lang.t("All")]],
             "pageLength": 20,
@@ -65,7 +65,7 @@ $(document).ready(function () {
                     orderable: false,
                     targets: 1,
                     render: function (data) {
-                        return `<img class="cat-thumb" src="${data.image}" alt="Client Image" />`;
+                        return `<img class="cat-thumb" src="${data.image}" alt="Customer Image" />`;
                     },
                 },
                 {
@@ -158,7 +158,7 @@ $(document).ready(function () {
                         var deleteButtonText = data.status === 0 ? 'Restore' : 'Delete';
 
                         return `<div class="btn-group mb-1">
-                            <button type="button" class="btn btn-outline-success info-client" data-id="${data.id}">${lang.t('Products')}</button>
+                            <button type="button" class="btn btn-outline-success info-customer" data-id="${data.id}">${lang.t('Products')}</button>
                             <button type="button"
                                 class="btn btn-outline-success dropdown-toggle dropdown-toggle-split"
                                 data-bs-toggle="dropdown" aria-haspopup="true"
@@ -166,8 +166,8 @@ $(document).ready(function () {
                                 <span class="sr-only">${lang.t('Products')}</span>
                             </button>
                             <div class="dropdown-menu">
-                                <a class="dropdown-item edit-client" data-id="${data.id}" href="#">${lang.t('Edit')}</a>
-                                <a class="dropdown-item delete-client" data-id="${data.id}" data-status="${data.status}" href="#">${lang.t(deleteButtonText)}</a>
+                                <a class="dropdown-item edit-customer" data-id="${data.id}" href="#">${lang.t('Edit')}</a>
+                                <a class="dropdown-item delete-customer" data-id="${data.id}" data-status="${data.status}" href="#">${lang.t(deleteButtonText)}</a>
                             </div>
                         </div>`;
                     },
@@ -177,13 +177,13 @@ $(document).ready(function () {
     }
 
     // Eliminar almacén
-    clientDataTable.on('click', '.delete-client', function (e) {
+    customerDataTable.on('click', '.delete-customer', function (e) {
         e.preventDefault();
 
-        var clientId = $(this).data('id');
-        var clientStatus = $(this).data('status');
+        var customerId = $(this).data('id');
+        var customerStatus = $(this).data('status');
 
-        var confirmMessage = clientStatus === 1 ? lang.t('Are you sure you want to delete this client?') : lang.t('Do you want to restore this client?');
+        var confirmMessage = customerStatus === 1 ? lang.t('Are you sure you want to delete this customer?') : lang.t('Do you want to restore this customer?');
 
         Swal.fire({
             title: lang.t('Confirm'),
@@ -194,7 +194,7 @@ $(document).ready(function () {
             cancelButtonText: lang.t('Cancel')
         }).then((result) => {
             if (result.isConfirmed) {
-                var url = clientStatus === 1 ? '/home/clients/delete=' + clientId : '/home/clients/restore=' + clientId;
+                var url = customerStatus === 1 ? '/home/customers/delete=' + customerId : '/home/customers/restore=' + customerId;
 
                 // Realizar la solicitud POST para cambiar el estado del almacén
                 $.ajax({
@@ -202,16 +202,16 @@ $(document).ready(function () {
                     method: 'POST',
                     data: {
                         _token: $('meta[name="csrf-token"]').attr('content'),
-                        id: clientId
+                        id: customerId
                     },
                     success: function (response) {
                         // Actualizar la tabla después de cambiar el estado del almacén
-                        clientDataTable.DataTable().ajax.reload();
+                        customerDataTable.DataTable().ajax.reload();
                         Swal.fire(lang.t('Éxito'), response.message, 'success');
                     },
                     error: function (xhr) {
-                        console.error(lang.t('Error when changing the client status:'), xhr.responseText);
-                        Swal.fire(lang.t('Error'), lang.t('There was an error changing the client status.'), 'error');
+                        console.error(lang.t('Error when changing the customer status:'), xhr.responseText);
+                        Swal.fire(lang.t('Error'), lang.t('There was an error changing the customer status.'), 'error');
                     }
                 });
             }
@@ -219,29 +219,29 @@ $(document).ready(function () {
     });
 
     // Completa los campos con los datos correspondientes
-    clientDataTable.on('click', '.edit-client', function (e) {
+    customerDataTable.on('click', '.edit-customer', function (e) {
         e.preventDefault();
 
-        var clientId = $(this).data('id');
+        var customerId = $(this).data('id');
 
         $.ajax({
-            url: '/home/clients/edit=' + clientId,
+            url: '/home/customers/edit=' + customerId,
             method: 'GET',
-            success: function (clientData) {
-                $('#edit-social-reason').val(clientData.social_reason);
-                $('#edit-name').val(clientData.name);
-                $('#edit-lastname').val(clientData.lastname);
-                $('#edit-dni').val(clientData.dni);
-                $('#edit-status').val(clientData.status);
-                $('#edit-email').val(clientData.email);
-                $('#edit-phone').val(clientData.phone);
-                $('#edit-mobile').val(clientData.mobile);
-                $('#edit-address').val(clientData.address);
-                $('#edit-location').val(clientData.location);
-                $('#edit-details').val(clientData.details);
+            success: function (customerData) {
+                $('#edit-social-reason').val(customerData.social_reason);
+                $('#edit-name').val(customerData.name);
+                $('#edit-lastname').val(customerData.lastname);
+                $('#edit-dni').val(customerData.dni);
+                $('#edit-status').val(customerData.status);
+                $('#edit-email').val(customerData.email);
+                $('#edit-phone').val(customerData.phone);
+                $('#edit-mobile').val(customerData.mobile);
+                $('#edit-address').val(customerData.address);
+                $('#edit-location').val(customerData.location);
+                $('#edit-details').val(customerData.details);
 
-                var clientImage = clientData.image ? clientData.image : clientData.image;
-                $('#defaultImageEdit').attr('src', clientImage);
+                var customerImage = customerData.image ? customerData.image : customerData.image;
+                $('#defaultImageEdit').attr('src', customerImage);
 
                 // Manejar cambios en el input file para previsualizar la nueva imagen
                 $('#coverImageEdit').on('change', function () {
@@ -257,13 +257,13 @@ $(document).ready(function () {
                         reader.readAsDataURL(input.files[0]);
                     } else {
                         // Si se deja en blanco, volver a mostrar la imagen actual
-                        $('#defaultImageEdit').attr('src', clientImage);
+                        $('#defaultImageEdit').attr('src', customerImage);
                     }
                 });
                 // Configurar los atributos del formulario
-                $('#editClientForm').attr('enctype', 'multipart/form-data');
-                $('#editClientForm').attr('action', '/home/clients/edit=' + clientId);
-                $('#editClientForm').attr('method', 'POST');
+                $('#editCustomerForm').attr('enctype', 'multipart/form-data');
+                $('#editCustomerForm').attr('action', '/home/customers/edit=' + customerId);
+                $('#editCustomerForm').attr('method', 'POST');
             },
             error: function (xhr) {
                 console.error('Error al obtener datos del proveedor:', xhr.responseText);
@@ -271,25 +271,25 @@ $(document).ready(function () {
         });
 
         // Mostrar el modal después de configurar los atributos del formulario
-        $('#editClientModal').modal('show');
+        $('#editCustomerModal').modal('show');
     });
 
-    // Info Client
-    clientDataTable.on('client', '.info-client', function(e) {
+    // Info Customer
+    customerDataTable.on('customer', '.info-customer', function(e) {
         e.preventDefault();
-        var clientId = $(this).data('id');
-        window.location.href = '/home/clients/profile=' + clientId ;
+        var customerId = $(this).data('id');
+        window.location.href = '/home/customers/profile=' + customerId ;
     });
 
     // Download Template
     $('.template').on('click', function () {
         // URL de la plantilla que se va a descargar
-        var templateUrl = '/admin/templates/clients.csv'; // Reemplaza con la ruta correcta de tu plantilla
+        var templateUrl = '/admin/templates/customers.csv'; // Reemplaza con la ruta correcta de tu plantilla
 
         // Crear un enlace temporal para la descarga
         var link = document.createElement('a');
         link.href = templateUrl;
-        link.download = 'plantilla_clients.csv'; // Nombre del archivo a descargar
+        link.download = 'plantilla_customers.csv'; // Nombre del archivo a descargar
 
         // Agregar el enlace al DOM y simular un clic para iniciar la descarga
         document.body.appendChild(link);
@@ -326,7 +326,7 @@ $(document).ready(function () {
                     formData.append('_token', csrfToken);
 
                     $.ajax({
-                        url: '/home/clients/import',
+                        url: '/home/customers/import',
                         method: 'POST',
                         data: formData,
                         contentType: false,
@@ -334,10 +334,10 @@ $(document).ready(function () {
                         success: function (response) {
                             console.log(response.message);
                             // Puedes recargar la tabla aquí
-                            if (typeof clientDataTable !== 'undefined') {
+                            if (typeof customerDataTable !== 'undefined') {
                                 toastr.success('Importación exitosa');
                                 setTimeout(function () {
-                                    // clientDataTable.DataTable().ajax.reload();
+                                    // customerDataTable.DataTable().ajax.reload();
                                     window.location.reload();
                                 }, 1500); // Tiempo en milisegundos antes de recargar
                             }
@@ -369,6 +369,6 @@ $(document).ready(function () {
 
     // Export
     $('.export').on('click', function () {
-        window.location.href = '/home/clients/export';
+        window.location.href = '/home/customers/export';
     });
 });

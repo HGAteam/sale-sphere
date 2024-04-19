@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Client extends Model
+class Customer extends Model
 {
     use HasFactory;
 
@@ -28,7 +28,7 @@ class Client extends Model
     public function getImageAttribute($value)
     {
         if (!$value) {
-            return asset('images/clients/blank.png');
+            return asset('images/customers/blank.png');
         }
         return asset($value);
     }

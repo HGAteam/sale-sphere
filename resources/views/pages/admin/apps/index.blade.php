@@ -13,7 +13,7 @@
         <div class="ec-vendor-card mt-m-24px row">
 
             @foreach (config('modules.apps') as $module)
-            <div class="col-lg-6 col-xl-4 col-xxl-3">
+            <div class="col-lg-6 col-xl-6 col-xxl-3">
                 <div class="card card-default mt-24px">
                     <a href="javascript:0" data-bs-toggle="modal" data-bs-target="#modal-contact" class="view-detail"><i
                             class="mdi mdi-eye-plus-outline"></i>
@@ -25,28 +25,18 @@
                             </div>
 
                             <h5 class="card-title text-dark">{{__($module['title'])}}</h5>
-
-                            <ul class="list-unstyled">
-
-                                @foreach ($module['features'] as $item)
-                                <li class="mb-1">
-                                    <span>{{$item}}</span>
-                                </li>
-                                @endforeach
-
-                            </ul>
                         </a>
                         <div class="row justify-content-center ec-vendor-detail">
-                            <div class="col-4">
-                                <h6 class="text-uppercase">{{__('Price')}}</h6>
+                            <div class="col-sm-4 col-lg-4">
+                                <h6 class="text-uppercase bg-success text-white">{{__('Price')}}</h6>
                                 <h5>$ {{$module['price']}}</h5>
                             </div>
-                            <div class="col-4">
-                                <h6 class="text-uppercase">{{__('Discount')}}</h6>
-                                <h5>$ {{$module['discount']}}</h5>
+                            <div class="col-sm-4 col-lg-4">
+                                <h6 class="text-uppercase bg-warning text-white">%</h6>
+                                <h5>% {{$module['discount']}}</h5>
                             </div>
-                            <div class="col-4">
-                                <h6 class="text-uppercase">{{__('Total')}}</h6>
+                            <div class="col-sm-4 col-lg-4">
+                                <h6 class="text-uppercase bg-primary text-white">{{__('Total')}}</h6>
                                 @php
                                     // Calcula el descuento como un porcentaje del precio original
                                     $discountAmount = ($module['price'] * $module['discount']) / 100;

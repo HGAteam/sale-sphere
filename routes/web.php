@@ -114,16 +114,16 @@ Route::prefix('home')->middleware(['auth'])->group(function(){
         Route::post('delete={id}', [App\Http\Controllers\Admin\SupplierController::class, 'destroy'])->name('destroy');
     });
 
-    // Clients
-    Route::prefix('clients')->name('clients.')->group(function(){
-        Route::get('', [App\Http\Controllers\Admin\ClientController::class, 'index'])->name('index');
-        Route::get('data', [App\Http\Controllers\Admin\ClientController::class, 'data'])->name('data');
-        Route::get('edit={id}', [App\Http\Controllers\Admin\ClientController::class, 'edit'])->name('edit');
-        Route::post('', [App\Http\Controllers\Admin\ClientController::class, 'store'])->name('store');
-        Route::post('edit={id}', [App\Http\Controllers\Admin\ClientController::class, 'update'])->name('update');
-        Route::get('profile={id}', [App\Http\Controllers\Admin\ClientController::class, 'show'])->name('show');
-        Route::post('delete={id}', [App\Http\Controllers\Admin\ClientController::class, 'destroy'])->name('destroy');
-        Route::post('restore={id}', [App\Http\Controllers\Admin\ClientController::class, 'restore'])->name('restore');
+    // Customers
+    Route::prefix('customers')->name('customers.')->group(function(){
+        Route::get('', [App\Http\Controllers\Admin\CustomerController::class, 'index'])->name('index');
+        Route::get('data', [App\Http\Controllers\Admin\CustomerController::class, 'data'])->name('data');
+        Route::get('edit={id}', [App\Http\Controllers\Admin\CustomerController::class, 'edit'])->name('edit');
+        Route::post('', [App\Http\Controllers\Admin\CustomerController::class, 'store'])->name('store');
+        Route::post('edit={id}', [App\Http\Controllers\Admin\CustomerController::class, 'update'])->name('update');
+        Route::get('profile={id}', [App\Http\Controllers\Admin\CustomerController::class, 'show'])->name('show');
+        Route::post('delete={id}', [App\Http\Controllers\Admin\CustomerController::class, 'destroy'])->name('destroy');
+        Route::post('restore={id}', [App\Http\Controllers\Admin\CustomerController::class, 'restore'])->name('restore');
     });
 
     // Products

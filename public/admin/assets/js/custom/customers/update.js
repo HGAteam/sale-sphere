@@ -1,14 +1,14 @@
 $(document).ready(function () {
     "use strict";
 
-    var clientDataTable = $("#clients-data-table")
+    var customerDataTable = $("#customers-data-table")
     // Manejar clic en el botón "Save changes"
     $('#btnSaveChanges').on('click', function () {
         // Obtener el token CSRF
         var csrfToken = $('meta[name="csrf-token"]').attr('content');
 
         // Obtener datos del formulario y agregar el token CSRF
-        var formData = new FormData($('#editClientForm')[0]);
+        var formData = new FormData($('#editCustomerForm')[0]);
         formData.append('_token', csrfToken);
 
         // Mostrar datos en la consola antes de enviar la solicitud
@@ -16,8 +16,8 @@ $(document).ready(function () {
 
         // Realizar la solicitud POST para guardar los cambios
         $.ajax({
-            url: $('#editClientForm').attr('action'),
-            method: $('#editClientForm').attr('method'),
+            url: $('#editCustomerForm').attr('action'),
+            method: $('#editCustomerForm').attr('method'),
             data: formData,
             contentType: false,
             processData: false,
@@ -29,10 +29,10 @@ $(document).ready(function () {
                 toastr.success(response.message);
 
                 // Cerrar el modal
-                $('#editClientModal').modal('hide');
+                $('#editCustomerModal').modal('hide');
 
                 // Recargar el DataTable
-                clientDataTable.DataTable().ajax.reload();
+                customerDataTable.DataTable().ajax.reload();
             },
             error: function (xhr) {
                 if (xhr.status === 422) {
@@ -65,6 +65,6 @@ $(document).ready(function () {
     // Botón de cancelar
     $("#btnCancelChanges").click(function () {
         // Cierra el modal
-        $("#editClientModal").modal("hide");
+        $("#editCustomerModal").modal("hide");
     });
 });

@@ -10,6 +10,7 @@
 
     <div class="card bg-white profile-content">
         <div class="row">
+
             <div class="col-lg-4 col-xl-3">
                 <div class="profile-content-left profile-left-spacing">
                     <div class="text-center widget-profile px-0 border-0">
@@ -17,7 +18,8 @@
                             @if ($user->avatar)
                                 <img src="{{ $user->avatar }}" alt="{{ $user->name . ' ' . $user->lastname }}">
                             @else
-                                <img src="{{ asset('admin/assets/img/user/u1.jpg') }}" alt="{{ $user->name . ' ' . $user->lastname }}">
+                                <img src="{{ asset('admin/assets/img/user/u1.jpg') }}"
+                                    alt="{{ $user->name . ' ' . $user->lastname }}">
                             @endif
 
                         </div>
@@ -39,11 +41,10 @@
                         <p>
                             @switch($user->status)
                                 @case(1)
-                                    {{ __('Active') }}
+                                <span class="mt-3 badge badge-success">{{ __('Active') }}</span>
                                 @break
-
                                 @default
-                                    {{ __('Inactive') }}
+                                <span class="mt-3 badge badge-secondary">{{ __('Inactive') }}</span>
                             @endswitch
                         </p>
                         <p class="text-dark font-weight-medium pt-24px mb-2">{{ __('Phone Number') }}</p>
@@ -65,7 +66,9 @@
                         <p class="text-dark font-weight-medium pt-24px mb-2">{{ __('Address') }}</p>
                         <p>
                             @if ($user->location && $user->address)
-                                {{ $user->location . ', ' . $user->address }}
+                                {{ $user->address }}
+                                <br>
+                                {{ $user->location }}
                             @else
                                 <b>--</b>
                             @endif
@@ -89,6 +92,26 @@
                                 data-bs-target="#personal-info" type="button" role="tab" aria-controls="personal-info"
                                 aria-selected="true">{{ __('Personal Info') }}</button>
                         </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="sales-tab" data-bs-toggle="tab"
+                                data-bs-target="#sales" type="button" role="tab" aria-controls="sales"
+                                aria-selected="true">{{ __('Sales') }}</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="customers-tab" data-bs-toggle="tab"
+                                data-bs-target="#customers" type="button" role="tab" aria-controls="customers"
+                                aria-selected="true">{{ __('Customers') }}</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="inventory-tab" data-bs-toggle="tab"
+                                data-bs-target="#inventory" type="button" role="tab" aria-controls="inventory"
+                                aria-selected="true">{{ __('Inventory') }}</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="schedules-tab" data-bs-toggle="tab"
+                                data-bs-target="#schedules" type="button" role="tab" aria-controls="schedules"
+                                aria-selected="true">{{ __('Schedule') }}</button>
+                        </li>
                     </ul>
                     <div class="tab-content px-3 px-xl-5" id="myTabContent">
 
@@ -105,7 +128,7 @@
 
                                             <div class="media-body align-self-center">
                                                 <h4 class="text-primary mb-2">0</h4>
-                                                <p>{{ __('Clients') }}</p>
+                                                <p>{{ __('Customers') }}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -284,8 +307,7 @@
                         </div>
 
                         <!-- Personal Info -->
-                        <div class="tab-pane fade" id="personal-info" role="tabpanel"
-                            aria-labelledby="personal-info-tab">
+                        <div class="tab-pane fade" id="personal-info" role="tabpanel" aria-labelledby="personal-info-tab">
                             <div class="tab-pane-content mt-5">
                                 <form method="POST"
                                     action="{{ route('users.update_personal_info', ['id' => $user->id]) }}"
@@ -362,16 +384,16 @@
                                         <div class="col-lg-6 col-sm-6">
                                             <div class="form-group">
                                                 <label for="phone">{{ __('Phone') }}</label>
-                                                <input type="text" class="form-control" id="phone"
-                                                    name="phone" value="{{ old('phone', $user->phone) }}">
+                                                <input type="text" class="form-control" id="phone" name="phone"
+                                                    value="{{ old('phone', $user->phone) }}">
                                             </div>
                                         </div>
                                         <!-- Mobile -->
                                         <div class="col-lg-6 col-sm-6">
                                             <div class="form-group">
                                                 <label for="mobile">{{ __('Mobile') }}</label>
-                                                <input type="text" class="form-control" id="mobile"
-                                                    name="mobile" value="{{ old('mobile', $user->mobile) }}">
+                                                <input type="text" class="form-control" id="mobile" name="mobile"
+                                                    value="{{ old('mobile', $user->mobile) }}">
                                             </div>
                                         </div>
                                     </div>
@@ -384,6 +406,34 @@
                                         </button>
                                     </div>
                                 </form>
+                            </div>
+                        </div>
+
+                        <!-- Sales -->
+                        <div class="tab-pane fade" id="sales" role="tabpanel" aria-labelledby="sales-tab">
+                            <div class="tab-pane-content mt-5">
+                            1
+                            </div>
+                        </div>
+
+                        <!-- Customers -->
+                        <div class="tab-pane fade" id="customers" role="tabpanel" aria-labelledby="customers-tab">
+                            <div class="tab-pane-content mt-5">
+                            2
+                            </div>
+                        </div>
+
+                        <!-- Inventory -->
+                        <div class="tab-pane fade" id="inventory" role="tabpanel" aria-labelledby="inventory-tab">
+                            <div class="tab-pane-content mt-5">
+                            3
+                            </div>
+                        </div>
+
+                        <!-- Schedules -->
+                        <div class="tab-pane fade" id="schedules" role="tabpanel" aria-labelledby="schedules-tab">
+                            <div class="tab-pane-content mt-5">
+                            4
                             </div>
                         </div>
 
@@ -433,7 +483,43 @@
             if (userData && userData.avatar) {
                 customFileLabel.innerText = userData.avatar.split('/').pop();
             }
+
+            // Tabs
+            // Obtener todos los elementos de las pestañas y los contenidos de las pestañas
+            var tabs = document.querySelectorAll('[data-bs-toggle="tab"]');
+            var tabContents = document.querySelectorAll('.tab-pane');
+
+            // Obtener el ID de la pestaña activa y su contenido almacenado en el almacenamiento local
+            var activeTabId = localStorage.getItem('activeTabId');
+            var activeTabContentId = localStorage.getItem('activeTabContentId');
+
+            // Si hay un ID de pestaña activa guardado, activar esa pestaña y mostrar su contenido al cargar la página
+            if (activeTabId && activeTabContentId) {
+                // Desactivar todas las pestañas y ocultar todos los contenidos de las pestañas
+                tabs.forEach(function(tab) {
+                    tab.classList.remove('active');
+                });
+                tabContents.forEach(function(content) {
+                    content.classList.remove('show', 'active');
+                });
+
+                // Activar la pestaña guardada y mostrar su contenido
+                document.getElementById(activeTabId).classList.add('active');
+                document.getElementById(activeTabContentId).classList.add('show', 'active');
+            }
+
+            // Agregar un evento click a cada pestaña para guardar la pestaña activa en el almacenamiento local
+            tabs.forEach(function(tab) {
+                tab.addEventListener('click', function() {
+                    var tabId = this.getAttribute('id');
+                    var tabContentId = this.getAttribute('data-bs-target').slice(
+                    1); // Eliminar el '#'
+                    localStorage.setItem('activeTabId', tabId);
+                    localStorage.setItem('activeTabContentId', tabContentId);
+                });
+            });
         });
     </script>
+
     <script src="{{ asset('admin/assets/js/button-ajax.js') }}"></script>
 @endsection

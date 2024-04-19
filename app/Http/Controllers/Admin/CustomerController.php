@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use \App\Models\Client;
+use \App\Models\Customer;
 use Carbon\Carbon;
 use DataTables;
 use Illuminate\Validation\ValidationException;
@@ -14,10 +14,10 @@ use File;
 use Intervention\Image\ImageManagerStatic as Image;
 use Illuminate\Database\QueryException;
 use Maatwebsite\Excel\Facades\Excel;
-use App\Imports\ClientsImport;
-use App\Exports\ClientsExport;
+use App\Imports\CustomersImport;
+use App\Exports\CustomersExport;
 
-class ClientController extends Controller
+class CustomerController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -28,19 +28,19 @@ class ClientController extends Controller
     {
         $breadcrumb = [
             ['url' => '/home', 'label' => trans('Home')],
-            ['url' => '#', 'label' => trans('Clients')],
+            ['url' => '#', 'label' => trans('Customers')],
         ];
-        $clients = Client::all()->count();
+        $customers = Customer::all()->count();
 
-        return view('pages.admin.clients.index',compact('breadcrumb','clients'));
+        return view('pages.admin.customers.index',compact('breadcrumb','customers'));
     }
 
     public function data()
     {
-        $clientArray = Client::all();
-        $clients = [];
+        $customerArray = Customer::all();
+        $customers = [];
 
-        foreach ($clientArray as $value) {
+        foreach ($customerArray as $value) {
             $data['id'] = $value->id;
             $data['name'] = $value->name;
             $data['image'] = $value->image;
@@ -53,10 +53,10 @@ class ClientController extends Controller
             $data['phone'] = $value->phone;
             $data['mobile'] = $value->mobile;
             $data['created_at'] = Carbon::parse($value->created_at)->locale('es')->isoFormat('DD/MM/YYYY');
-            $clients[] = $data;
+            $customers[] = $data;
         }
 
-        return Datatables::of($clients)->make(true);
+        return Datatables::of($customers)->make(true);
     }
 
     /**
@@ -78,22 +78,22 @@ class ClientController extends Controller
     public function store(Request $request)
     {
         try {
-            $client = new Client();
-            $client->name = $request->name;
-            $client->lastname = $request->lastname;
-            $client->slug = Str::slug($request->name.'-'.$request->lastname);
-            $client->email = $request->email;
-            $client->dni = $request->dni;
-            $client->phone = $request->phone;
-            $client->mobile = $request->mobile;
-            $client->address = $request->address;
-            $client->location = $request->location;
+            $customer = new Customer();
+            $customer->name = $request->name;
+            $customer->lastname = $request->lastname;
+            $customer->slug = Str::slug($request->name.'-'.$request->lastname);
+            $customer->email = $request->email;
+            $customer->dni = $request->dni;
+            $customer->phone = $request->phone;
+            $customer->mobile = $request->mobile;
+            $customer->address = $request->address;
+            $customer->location = $request->location;
             if($request->file('image')){
                 $image = $request->file('image');
-                $imageName = time() . '.' . $image->getClientOriginalExtension();
-                $imagePath = public_path('images/clients/') . $imageName;
-                $image->move(public_path('images/clients/'), $imageName);
-                $resizedImagePath = 'images/clients/' . $imageName;
+                $imageName = time() . '.' . $image->getCustomerOriginalExtension();
+                $imagePath = public_path('images/customers/') . $imageName;
+                $image->move(public_path('images/customers/'), $imageName);
+                $resizedImagePath = 'images/customers/' . $imageName;
 
                 // Redimensionar y corregir la orientación de la imagen
                 Image::make($imagePath)->resize(640, 640, function ($constraint) {
@@ -102,12 +102,12 @@ class ClientController extends Controller
                     ->orientate() // Corregir la orientación
                     ->save(public_path($resizedImagePath));
 
-                $client->image = $resizedImagePath;
+                $customer->image = $resizedImagePath;
             }
-            $client->details = $request->details;
-            $client->save();
+            $customer->details = $request->details;
+            $customer->save();
 
-            return response()->json(['message' => trans('Client successfully created')], 200);
+            return response()->json(['message' => trans('Customer successfully created')], 200);
         } catch (ValidationException $e) {
             return response()->json(['errors' => $e->validator->errors()->toArray()], 422);
         }
@@ -121,14 +121,14 @@ class ClientController extends Controller
      */
     public function show($id)
     {
-        $client = Client::findOrFail($id);
+        $customer = Customer::findOrFail($id);
         $breadcrumb = [
             ['url' => '/home', 'label' => trans('Home')],
-            ['url' => '/home/clients', 'label' => trans('Clients')],
-            ['url' => '#', 'label' => $client->name.' '.$client->lastname],
+            ['url' => '/home/customers', 'label' => trans('Customers')],
+            ['url' => '#', 'label' => $customer->name.' '.$customer->lastname],
         ];
 
-        return view('pages.admin.clients.show',compact('breadcrumb','client'));
+        return view('pages.admin.customers.show',compact('breadcrumb','customer'));
     }
 
     /**
@@ -139,8 +139,8 @@ class ClientController extends Controller
      */
     public function edit($id)
     {
-        $client = Client::findOrFail($id);
-        return response()->json($client);
+        $customer = Customer::findOrFail($id);
+        return response()->json($customer);
     }
 
     /**
@@ -154,47 +154,47 @@ class ClientController extends Controller
     {
         try {
             // Obtener el usuario existente
-            $client = Client::findOrFail($id);
+            $customer = Customer::findOrFail($id);
 
             // Borrar la imagen anterior si existe
-            if ($client->image && $client->image != null && $request->file('edit_image') != '') {
-                $oldImagePath = public_path($client->image);
+            if ($customer->image && $customer->image != null && $request->file('edit_image') != '') {
+                $oldImagePath = public_path($customer->image);
                 if (File::exists($oldImagePath)) {
                     File::delete($oldImagePath);
-                    $client->image = null;
+                    $customer->image = null;
                 }
             }
 
             // Actualizar los campos del usuario
-            $client->name = $request->edit_name;
-            $client->dni = $request->edit_dni;
-            $client->lastname = $request->edit_lastname;
-            $client->slug = Str::slug($request->edit_name . '-' . $request->edit_lastname);
-            $client->phone = $request->edit_phone;
-            $client->mobile = $request->edit_mobile;
-            $client->address = $request->edit_address;
-            $client->location = $request->edit_location;
-            $client->status = $request->edit_status;
+            $customer->name = $request->edit_name;
+            $customer->dni = $request->edit_dni;
+            $customer->lastname = $request->edit_lastname;
+            $customer->slug = Str::slug($request->edit_name . '-' . $request->edit_lastname);
+            $customer->phone = $request->edit_phone;
+            $customer->mobile = $request->edit_mobile;
+            $customer->address = $request->edit_address;
+            $customer->location = $request->edit_location;
+            $customer->status = $request->edit_status;
 
             if($request->edit_status != 'Deleted'){
-                $client->deleted_at = NULL;
+                $customer->deleted_at = NULL;
             }else{
-                $client->deleted_at = now();
+                $customer->deleted_at = now();
             }
 
-            if($request->edit_email == $client->email){}
+            if($request->edit_email == $customer->email){}
             else{
-                $client->email = $request->edit_email;
+                $customer->email = $request->edit_email;
             }
 
             // Actualizar la imagen solo si se proporciona una nueva imagen
             if ($request->file('edit_image') && $request->file('edit_image') != null && $request->file('edit_image') != '') {
                 if($request->file('edit_image')){
                     $image = $request->file('edit_image');
-                    $imageName = time() . '.' . $image->getClientOriginalExtension();
-                    $imagePath = public_path('images/clients/') . $imageName;
-                    $image->move(public_path('images/clients/'), $imageName);
-                    $resizedImagePath = 'images/clients/' . $imageName;
+                    $imageName = time() . '.' . $image->getCustomerOriginalExtension();
+                    $imagePath = public_path('images/customers/') . $imageName;
+                    $image->move(public_path('images/customers/'), $imageName);
+                    $resizedImagePath = 'images/customers/' . $imageName;
 
                     // Redimensionar y corregir la orientación de la imagen
                     Image::make($imagePath)
@@ -204,16 +204,16 @@ class ClientController extends Controller
                         ->orientate() // Corregir la orientación
                         ->save(public_path($resizedImagePath));
 
-                    $client->image = $resizedImagePath;
+                    $customer->image = $resizedImagePath;
                 }
             }
 
             // Guardar los cambios en la base de datos
-            $client->details = $request->edit_details;
+            $customer->details = $request->edit_details;
 
-            $client->save();
+            $customer->save();
 
-            return response()->json(['message' => trans('Client successfully updated')], 200);
+            return response()->json(['message' => trans('Customer successfully updated')], 200);
         } catch (ValidationException $e) {
             return response()->json(['errors' => $e->validator->errors()->toArray()], 422);
         }
@@ -227,23 +227,23 @@ class ClientController extends Controller
      */
     public function destroy($id)
     {
-        $client = Client::findOrFail($id);
-        $client->update([
+        $customer = Customer::findOrFail($id);
+        $customer->update([
             'status' => 0,
             'deleted_at' => now(),
         ]);
-        return response()->json(['message' => trans('Client marked as inactive.')]);
+        return response()->json(['message' => trans('Customer marked as inactive.')]);
     }
 
     // Método en el controlador para restaurar el almacén
     public function restore($id)
     {
-        $client = Client::findOrFail($id);
-        $client->update([
+        $customer = Customer::findOrFail($id);
+        $customer->update([
             'status' => 1,
             'deleted_at' => null,
         ]);
-        return response()->json(['message' => trans('Client restored.')]);
+        return response()->json(['message' => trans('Customer restored.')]);
     }
 
     public function import(Request $request)
@@ -256,7 +256,7 @@ class ClientController extends Controller
             $file = $request->file('file');
 
             // Importar el archivo CSV
-            $import = new ClientsImport;
+            $import = new CustomersImport;
             Excel::import($import, $file);
 
             // Verificar si hay productos duplicados
@@ -294,6 +294,6 @@ class ClientController extends Controller
     }
 
     public function export(Request $requet){
-        return Excel::download(new ClientsExport, 'users.xlsx');
+        return Excel::download(new CustomersExport, 'users.xlsx');
     }
 }

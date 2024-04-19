@@ -10,9 +10,9 @@
 @section('content')
     @include('layouts.admin.partials.breadcrumb', [
         'breadcrumb' => $breadcrumb,
-        ($pageTitle = trans('Clients')),
-        ($modalLink = '#addClient'),
-        ($modalName = trans('Add Client')),
+        ($pageTitle = trans('Customers')),
+        ($modalLink = '#addCustomer'),
+        ($modalName = trans('Add Customer')),
         ($href = ''),
     ])
 
@@ -21,11 +21,11 @@
             <div class="ec-cat-list card card-default">
                 <div class="card-header py-0">
                     <div class="card-title">
-                        <h1>{{__('Client List')}}</h1>
+                        <h1>{{__('Customer List')}}</h1>
                     </div>
                     <div class="card-toolbar">
                         <button type="button" class="m-3 btn btn-warning btn-responsive import">{{__('Import')}}</button>
-                        @if($clients)
+                        @if($customers)
                         <button type="button" class="m-3 btn btn-primary btn-responsive export">{{__('Export')}}</button>
                         @endif
                         <button type="button" class="m-3 btn btn-secondary btn-responsive template">{{__('Template')}}</button>
@@ -33,7 +33,7 @@
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table id="clients-data-table" class="table">
+                        <table id="customers-data-table" class="table">
                             <thead>
                                 <tr>
                                     <th>#</th>
@@ -58,21 +58,21 @@
         </div>
     </div>
 
-    <!-- Add Clients Modal  -->
-    <div class="modal fade modal-add-contact" data-bs-backdrop="static" id="addClient" tabindex="-1" role="dialog"
+    <!-- Add Customers Modal  -->
+    <div class="modal fade modal-add-contact" data-bs-backdrop="static" id="addCustomer" tabindex="-1" role="dialog"
         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
                 <form method="POST" action="#" id="add_new" enctype="multipart/form-data">
                     @csrf
                     <div class="modal-header px-4">
-                        <h5 class="modal-title" id="exampleModalCenterTitle">{{ __('Add Client') }}</h5>
+                        <h5 class="modal-title" id="exampleModalCenterTitle">{{ __('Add Customer') }}</h5>
                     </div>
 
                     <div class="modal-body px-4">
                         <!-- Avatar -->
                         <div class="form-group row">
-                            <label for="coverImage" class="col-sm-4 col-lg-4">{{ __('Client Image') }}
+                            <label for="coverImage" class="col-sm-4 col-lg-4">{{ __('Customer Image') }}
                                 <div class="">
                                     <!-- Imagen por defecto -->
                                     <img id="defaultImage" class="mb-5" src="/admin/assets/img/category/clothes.png"
@@ -172,22 +172,22 @@
         </div>
     </div>
 
-    <!-- Modal para editar Clients -->
-    <div class="modal fade" id="editClientModal" data-bs-backdrop="static" tabindex="-1"
-        aria-labelledby="editClientModalLabel" aria-hidden="true">
+    <!-- Modal para editar Customers -->
+    <div class="modal fade" id="editCustomerModal" data-bs-backdrop="static" tabindex="-1"
+        aria-labelledby="editCustomerModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="editClientModalLabel">{{ __('Edit Client') }}</h5>
+                    <h5 class="modal-title" id="editCustomerModalLabel">{{ __('Edit Customer') }}</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">x</button>
                 </div>
                 <div class="modal-body">
                     <!-- Agrega aquí los campos del formulario para editar el usuario -->
-                    <form id="editClientForm">
+                    <form id="editCustomerForm">
                         @csrf
                         <!-- Avatar -->
                         <div class="form-group row mb-6">
-                            <label for="coverImageEdit" class="col-sm-4 col-lg-4">{{ __('Client Image') }}
+                            <label for="coverImageEdit" class="col-sm-4 col-lg-4">{{ __('Customer Image') }}
                                 <div class="">
                                     <!-- Imagen por defecto -->
                                     <img id="defaultImageEdit" class="mb-5"
@@ -306,15 +306,15 @@
     <script src="{{ asset('admin/assets/plugins/data-tables/jquery.datatables.min.js') }}"></script>
     <script src="{{ asset('admin/assets/plugins/data-tables/datatables.bootstrap5.min.js') }}"></script>
     <script src="{{ asset('admin/assets/plugins/data-tables/datatables.responsive.min.js') }}"></script>
-    <script src="{{ asset('admin/assets/js/custom/clients/table.js') }}"></script>
-    <script src="{{ asset('admin/assets/js/custom/clients/add.js') }}"></script>
-    <script src="{{ asset('admin/assets/js/custom/clients/update.js') }}"></script>
+    <script src="{{ asset('admin/assets/js/custom/customers/table.js') }}"></script>
+    <script src="{{ asset('admin/assets/js/custom/customers/add.js') }}"></script>
+    <script src="{{ asset('admin/assets/js/custom/customers/update.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
         $(document).ready(function() {
             // Mostrar la imagen por defecto
-            var userImage = '/images/clients/blank.png';
+            var userImage = '/images/customers/blank.png';
             $('#defaultImage').attr('src', userImage);
 
             // Manejar cambios en el input file para previsualizar la nueva imagen
