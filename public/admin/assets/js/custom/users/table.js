@@ -200,8 +200,8 @@ $(document).ready(function () {
                 $('#edit-location').val(userData.location);
 
                 // Mostrar la imagen del usuario si existe, de lo contrario, mostrar la imagen por defecto
-                var userImage = userData.avatar ? userData.avatar : userData.avatar;
-                $('#defaultImage').attr('src', userImage);
+                var userImage = userData.avatar ;
+                $('#defaultImageEdit').attr('src', userImage);
 
                 // Manejar cambios en el input file para previsualizar la nueva imagen
                 $('#coverImageEdit').on('change', function () {
@@ -211,13 +211,13 @@ $(document).ready(function () {
                         var reader = new FileReader();
 
                         reader.onload = function (e) {
-                            $('#defaultImage').attr('src', e.target.result);
+                            $('#defaultImageEdit').attr('src', e.target.result);
                         };
 
                         reader.readAsDataURL(input.files[0]);
                     } else {
                         // Si se deja en blanco, volver a mostrar la imagen actual
-                        $('#defaultImage').attr('src', userImage);
+                        $('#defaultImageEdit').attr('src', userImage);
                     }
                 });
 

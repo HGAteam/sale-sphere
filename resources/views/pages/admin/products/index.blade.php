@@ -3,7 +3,7 @@
     <!-- Data Tables -->
     <link href="{{ asset('admin/assets/plugins/data-tables/datatables.bootstrap5.min.css') }}" rel='stylesheet'>
     <link href="{{ asset('admin/assets/plugins/data-tables/responsive.datatables.min.css') }}" rel='stylesheet'>
-    <link href="{{ asset('admin/assets/plugins/data-tables/datatables/buttons/css/buttons.bootstrap5.min.css') }}"
+    <link href="{{ asset('plugins/datatables/buttons/css/buttons.bootstrap5.min.css') }}"
         rel="stylesheet">
     <link href="{{ asset('admin/assets/plugins/select2/dist/css/select2.min.css') }}" rel="stylesheet" />
    <link href="{{asset('admin/assets/css/extra.css')}}" rel="stylesheet">
@@ -500,12 +500,12 @@
     <script src="{{ asset('admin/assets/plugins/data-tables/jquery.datatables.min.js') }}"></script>
     <script src="{{ asset('admin/assets/plugins/data-tables/datatables.bootstrap5.min.js') }}"></script>
     <script src="{{ asset('admin/assets/plugins/data-tables/datatables.responsive.min.js') }}"></script>
-    <script src="{{ asset('admin/assets/plugins/data-tables/datatables/buttons/js/dataTables.buttons.min.js') }}"></script>
-    <script src="{{ asset('admin/assets/plugins/data-tables/datatables/buttons/js/buttons.bootstrap5.min.js') }}"></script>
-    <script src="{{ asset('admin/assets/plugins/data-tables/datatables/buttons/js/buttons.colVis.min.js') }}"></script>
-    <script src="{{ asset('admin/assets/plugins/data-tables/datatables/buttons/js/buttons.html5.min.js') }}"></script>
-    <script src="{{ asset('admin/assets/plugins/data-tables/datatables/buttons/js/buttons.print.min.js') }}"></script>
-    <script src="{{ asset('admin/assets/plugins/data-tables/datatables/JSZip-3.10.1/jszip.min.js') }}"></script>
+    <script src="{{ asset('plugins/datatables/buttons/js/dataTables.buttons.min.js') }}"></script>
+    <script src="{{ asset('plugins/datatables/buttons/js/buttons.bootstrap5.min.js') }}"></script>
+    <script src="{{ asset('plugins/datatables/buttons/js/buttons.colVis.min.js') }}"></script>
+    <script src="{{ asset('plugins/datatables/buttons/js/buttons.html5.min.js') }}"></script>
+    <script src="{{ asset('plugins/datatables/buttons/js/buttons.print.min.js') }}"></script>
+    <script src="{{ asset('plugins/datatables/jszip/jszip.min.js') }}"></script>
     <script src="{{ asset('admin/assets/js/custom/products/table.js') }}"></script>
     <script>
         document.getElementById('editImageUpload').addEventListener('change', function() {

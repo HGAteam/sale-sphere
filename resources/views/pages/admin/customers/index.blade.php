@@ -79,7 +79,7 @@
                                         alt="Default Image" style="max-width: 100%; max-height: 150px;">
                                 </div>
                             </label>
-                            <div class="col-sm-12 col-lg-12">
+                            <div class="col-sm-12 col-lg-8">
                                 <div class="custom-file">
                                     <input type="file" class="custom-file-input" id="coverImage" name="image">
                                     <label class="custom-file-label" for="coverImage"
@@ -309,7 +309,8 @@
     <script src="{{ asset('admin/assets/js/custom/customers/table.js') }}"></script>
     <script src="{{ asset('admin/assets/js/custom/customers/add.js') }}"></script>
     <script src="{{ asset('admin/assets/js/custom/customers/update.js') }}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="{{ asset('plugins/sweetalert2/dist/sweetalert2.all.min.js') }}"></script>
+    {{-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> --}}
 
     <script>
         $(document).ready(function() {

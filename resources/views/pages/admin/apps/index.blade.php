@@ -1,4 +1,24 @@
 @extends('layouts.app')
+@section('styles')
+    <style>
+
+        /* Estilo para el icono de verificación */
+        .features li::before,
+        .benefits li::before {
+            content: "\f134"; /* Código de la check con circulo */
+            font-family: "Material Design Icons"; /* Familia de fuentes de los iconos */
+            margin-right: 5px; /* Espacio entre el icono y el texto */
+            color: green; /* Color del icono */
+        }
+
+        /* Estilo para el texto dentro de los elementos <li> */
+        .features li,
+        .benefits li {
+            font-size: 0.9em; /* Tamaño de fuente más pequeño */
+            font-weight: lighter; /* Peso de fuente más ligero */
+        }
+    </style>
+@endsection
 
 @section('content')
     @include('layouts.admin.partials.breadcrumb', [
@@ -12,124 +32,78 @@
     <div class="card card-default p-4 ec-card-space">
         <div class="ec-vendor-card mt-m-24px row">
 
-            @foreach (config('modules.apps') as $module)
-            <div class="col-lg-6 col-xl-6 col-xxl-3">
-                <div class="card card-default mt-24px">
-                    <a href="javascript:0" data-bs-toggle="modal" data-bs-target="#modal-contact" class="view-detail"><i
-                            class="mdi mdi-eye-plus-outline"></i>
-                    </a>
-                    <div class="vendor-info card-body text-center p-4">
-                        <a href="javascript:0" class="text-secondary d-inline-block mb-3">
-                            <div class="image mb-3">
-                                <img src="{{asset($module['image'])}}" class="img-fluid rounded-circle" alt="Avatar Image">
-                            </div>
-
-                            <h5 class="card-title text-dark">{{__($module['title'])}}</h5>
+            @foreach (\App\Models\Module::orderBy('id', 'ASC')->get() as $module)
+                <div class="col-lg-6 col-xl-6 col-xxl-3">
+                    <div class="card card-default mt-24px">
+                        <a href="javascript:0" class="view-detail">
+                            <i class="mdi mdi-eye-plus-outline"></i>
                         </a>
-                        <div class="row justify-content-center ec-vendor-detail">
-                            <div class="col-sm-4 col-lg-4">
-                                <h6 class="text-uppercase bg-success text-white">{{__('Price')}}</h6>
-                                <h5>$ {{$module['price']}}</h5>
-                            </div>
-                            <div class="col-sm-4 col-lg-4">
-                                <h6 class="text-uppercase bg-warning text-white">%</h6>
-                                <h5>% {{$module['discount']}}</h5>
-                            </div>
-                            <div class="col-sm-4 col-lg-4">
-                                <h6 class="text-uppercase bg-primary text-white">{{__('Total')}}</h6>
-                                @php
-                                    // Calcula el descuento como un porcentaje del precio original
-                                    $discountAmount = ($module['price'] * $module['discount']) / 100;
-                                    // Resta el descuento del precio original para obtener el total después del descuento
-                                    $totalAfterDiscount = $module['price'] - $discountAmount;
-                                @endphp
-                                <h5>$ {{$totalAfterDiscount}}</h5>
+                        <div class="vendor-info card-body text-center p-4">
+                            <a href="javascript:void(0);" class="text-secondary d-inline-block mb-3 modal-application">
+                                <div class="image mb-3">
+                                    <img src="{{ asset($module->image) }}" class="img-fluid rounded-circle"
+                                        alt="Avatar Image">
+                                </div>
+
+                                <h5 class="card-title text-dark">{{ __($module->title) }}</h5>
+                                <p>{!! $module->details !!}</p>
+                            </a>
+                            <div class="row justify-content-center ec-vendor-detail">
+                                <div class="col-sm-6 col-lg-6">
+                                    @if ($module->status != 'Completed')
+                                        @if ($module->status == 'In process')
+                                        <h6 class="text-uppercase bg-primary text-white">{{ __('Awaiting Answers') }}</h6>
+                                        @else
+                                        <h6 class="text-uppercase bg-success text-white">{{ __('Price') }}</h6>
+                                        <h5>$ {{ $module->price }}</h5>
+                                        @endif
+                                    @else
+                                        <h6 class="text-uppercase bg-secondary text-white">{{ __('Currently Added') }}</h6>
+                                    @endif
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
             @endforeach
 
         </div>
     </div>
 
     <!-- Applications Modal -->
-    <div class="modal fade" id="modal-contact" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal fade" id="modal-application" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header justify-content-end border-bottom-0">
-                    <button type="button" class="btn-edit-icon" data-bs-dismiss="modal" aria-label="Close">
-                        <i class="mdi mdi-pencil"></i>
-                    </button>
-
-                    <div class="dropdown">
-                        <button class="btn-dots-icon" type="button" id="dropdownMenuButton"
-                            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="mdi mdi-dots-vertical"></i>
-                        </button>
-
-                        <div class="dropdown-menu dropdown-menu-right">
-                            <a class="dropdown-item" href="#">Action</a>
-                            <a class="dropdown-item" href="#">Another action</a>
-                            <a class="dropdown-item" href="#">Something else here</a>
-                        </div>
-                    </div>
-
-                    <button type="button" class="btn-close-icon" data-bs-dismiss="modal"
-                        aria-label="Close">
+                    <button type="button" class="btn-close-icon" data-bs-dismiss="modal" aria-label="Close">
                         <i class="mdi mdi-close"></i>
                     </button>
                 </div>
-
                 <div class="modal-body pt-0">
                     <div class="row no-gutters">
                         <div class="col-md-6">
                             <div class="profile-content-left px-4">
                                 <div class="text-center widget-profile px-0 border-0">
                                     <div class="card-img mx-auto rounded-circle">
-                                        <img src="{{asset('images/apps/default.jpg')}}" alt="user image">
+                                        <img src="{{ asset('images/apps/default.jpg') }}" alt="user image">
                                     </div>
-
                                     <div class="card-body">
-                                        <h4 class="py-2 text-dark">{{__('Multiple Warehouses')}}</h4>
-                                        <p>{{__('Online + In Local')}}</p>
-                                        <a class="btn btn-primary btn-pill my-3" href="#">{{__('Buy for')}} <span>$10.000</span></a>
-                                        <a class="btn btn-secondary btn-pill my-3 disabled" href="#">{{__('Currently installed')}}</a>
+                                        <h4 class="py-2 text-dark"></h4>
+                                        <p>{{__('Detalles')}}</p>
+                                        <a class="btn btn-success btn-pill my-3 buy-now" href="#">{{ __('Buy') }} $ <span></span></a>
+                                        <a class="btn btn-secondary btn-pill my-3 disabled currently-added" href="javascript:void(0)">{{ __('Currently Added') }}</a>
+                                        <a class="btn btn-primary btn-pill my-3 disabled in-process" href="javascript:void(0)">{{ __('In Process') }}</a>
                                     </div>
                                 </div>
-
-                                {{-- <div class="d-flex justify-content-between ">
-                                    <div class="text-center pb-4">
-                                        <h6 class="text-dark pb-2">1503</h6>
-                                        <p>Items</p>
-                                    </div>
-
-                                    <div class="text-center pb-4">
-                                        <h6 class="text-dark pb-2">2905</h6>
-                                        <p>Sell</p>
-                                    </div>
-
-                                    <div class="text-center pb-4">
-                                        <h6 class="text-dark pb-2">1200</h6>
-                                        <p>Payout</p>
-                                    </div>
-                                </div> --}}
-
                             </div>
                         </div>
-
                         <div class="col-md-6">
                             <div class="contact-info px-4">
-                                <h4 class="text-dark mb-1">{{__('Application Details')}}</h4>
-                                <p class="text-dark font-weight-medium pt-3 mb-2">{{__('Benefits')}}</p>
-                                <p>{{__('Permite tener el sistema instalado en su negocio con respaldo en linea')}}</p>
-                                <p class="text-dark font-weight-medium pt-3 mb-2">{{__('Phone Number')}}</p>
-                                <p>+00 1234 5678 91</p>
-                                <p class="text-dark font-weight-medium pt-3 mb-2">{{__('Birthday')}}</p>
-                                <p>Dec 10, 1991</p>
-                                <p class="text-dark font-weight-medium pt-3 mb-2">Event</p>
-                                <p class="mb-2">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                                <h4 class="text-dark mb-1">{{ __('Application Details') }}</h4>
+                                <p class="text-dark font-weight-medium pt-3 mb-2">{{ __('Benefits') }}</p>
+                                <ul class="benefits" id="benefitsList"></ul>
+                                <p class="text-dark font-weight-medium pt-3 mb-2">{{ __('Features') }}</p>
+                                <ul class="features" id="featuresList"></ul>
                             </div>
                         </div>
                     </div>
@@ -138,423 +112,48 @@
         </div>
     </div>
 
-    <!-- Add Applications Button  -->
-    <div class="modal fade" id="modal-add-member" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
-            <div class="modal-content">
-                <form class="modal-header border-bottom-0">
-                    <input type="text" class="form-control" placeholder="Search...">
-                </form>
+@endsection
+@section('scripts')
+<script>
+    $(document).ready(function(){
+        // Manejar evento de clic en el botón que abre el modal
+        $('.view-detail').click(function(){
+            // Obtener el índice del módulo
+            var index = $(this).closest('.col-lg-6').index();
+            // Obtener la información del módulo correspondiente
+            var module = {!! json_encode(\App\Models\Module::orderBy('id', 'ASC')->get()) !!}[index];
 
-                <div class="modal-body p-0" data-simplebar style="height:320px">
-                    <ul class="list-unstyled border-top mb-0">
-                        <li>
-                            <div class="media media-message">
-                                <div class="position-relative mr-3">
-                                    <img class="rounded-circle" src="{{asset('images/apps/default.jpg')}}"
-                                        alt="Image">
-                                    <span class="status away"></span>
-                                </div>
-                                <div
-                                    class="media-body d-flex justify-content-between align-items-center">
-                                    <div class="message-contents">
-                                        <h4 class="title">Aaren</h4>
-                                        <p class="last-msg">Lorem ipsum dolor sit, amet consectetur
-                                            adipisicing elit. Nam itaque doloremque
-                                            odio,
-                                            eligendi delectus vitae.</p>
-                                    </div>
+            // Actualizar el contenido del modal con la información del módulo
+            $('#modal-application .modal-title').text(module.title);
+            $('#modal-application .profile-content-left img').attr('src', module.image);
+            $('#modal-application .buy-now span').text(module.price);
+            $('#modal-application .profile-content-left h4').text(module.title);
+            $('#modal-application .profile-content-left p').html(module.details);
 
-                                    <div class="control outlined control-checkbox checkbox-primary">
-                                        <input type="checkbox" checked="checked">
-                                        <div class="control-indicator"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
+            // Insertar beneficios
+            $('#benefitsList').html(module.benefits);
 
-                        <li>
-                            <div class="media media-message ">
-                                <div class="position-relative mr-3">
-                                    <img class="rounded-circle" src="assets/img/user/u2.jpg"
-                                        alt="Image">
-                                    <span class="status active"></span>
-                                </div>
-                                <div
-                                    class="media-body d-flex justify-content-between align-items-center">
-                                    <div class="message-contents">
-                                        <h4 class="title">Leon Battista</h4>
-                                        <p class="last-msg">Lorem ipsum dolor sit, amet consectetur
-                                            adipisicing elit. Nam itaque doloremque
-                                            odio,
-                                            eligendi delectus vitae.</p>
-                                    </div>
+            // Insertar características
+            $('#featuresList').html(module.features);
 
-                                    <div class="control outlined control-checkbox checkbox-primary">
-                                        <input type="checkbox" checked="checked">
-                                        <div class="control-indicator"></div>
-                                    </div>
+            // Mostrar el modal
+            $('#modal-application').modal('show');
 
-                                </div>
-                            </div>
-                        </li>
-
-                        <li>
-                            <div class="media media-message">
-                                <div class="position-relative mr-3">
-                                    <img class="rounded-circle" src="assets/img/user/u3.jpg"
-                                        alt="Image">
-                                    <span class="status away"></span>
-                                </div>
-                                <div
-                                    class="media-body d-flex justify-content-between align-items-center">
-                                    <div class="message-contents">
-                                        <h4 class="title">Abriel</h4>
-                                        <p class="last-msg">Lorem ipsum dolor sit, amet consectetur
-                                            adipisicing elit. Nam itaque doloremque
-                                            odio,
-                                            eligendi delectus vitae.</p>
-                                    </div>
-
-                                    <div class="control outlined control-checkbox checkbox-primary">
-                                        <input type="checkbox">
-                                        <div class="control-indicator"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-
-                        <li>
-                            <div class="media media-message">
-                                <div class="position-relative mr-3">
-                                    <img class="rounded-circle" src="assets/img/user/u4.jpg"
-                                        alt="Image">
-                                    <span class="status active"></span>
-                                </div>
-
-                                <div
-                                    class="media-body d-flex justify-content-between align-items-center">
-                                    <div class="message-contents">
-                                        <h4 class="title">Emma</h4>
-                                        <p class="last-msg">Lorem ipsum dolor sit, amet consectetur
-                                            adipisicing elit. Nam itaque doloremque
-                                            odio,
-                                            eligendi delectus vitae.</p>
-                                    </div>
-
-                                    <div class="control outlined control-checkbox checkbox-primary">
-                                        <input type="checkbox">
-                                        <div class="control-indicator"></div>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </li>
-
-                        <li>
-                            <div class="media media-message">
-                                <div class="position-relative mr-3">
-                                    <img class="rounded-circle" src="assets/img/user/u5.jpg"
-                                        alt="Image">
-                                    <span class="status away"></span>
-                                </div>
-
-                                <div
-                                    class="media-body d-flex justify-content-between align-items-center">
-                                    <div class="message-contents">
-                                        <h4 class="title">Emily</h4>
-                                        <p class="last-msg">Lorem ipsum dolor sit, amet consectetur
-                                            adipisicing elit. Nam itaque doloremque
-                                            odio,
-                                            eligendi delectus vitae.</p>
-                                    </div>
-
-                                    <div class="control outlined control-checkbox checkbox-primary">
-                                        <input type="checkbox">
-                                        <div class="control-indicator"></div>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </li>
-
-                        <li>
-                            <div class="media media-message">
-                                <div class="position-relative mr-3">
-                                    <img class="rounded-circle" src="assets/img/user/u6.jpg"
-                                        alt="Image">
-                                    <span class="status"></span>
-                                </div>
-
-                                <div
-                                    class="media-body d-flex justify-content-between align-items-center">
-                                    <div class="message-contents">
-                                        <h4 class="title">William</h4>
-                                        <p class="last-msg">Lorem ipsum dolor sit, amet consectetur
-                                            adipisicing elit. Nam itaque doloremque
-                                            odio,
-                                            eligendi delectus vitae.</p>
-                                    </div>
-
-                                    <div class="control outlined control-checkbox checkbox-primary">
-                                        <input type="checkbox">
-                                        <div class="control-indicator"></div>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </li>
-
-                        <li>
-                            <div class="media media-message">
-                                <div class="position-relative mr-3">
-                                    <img class="rounded-circle" src="assets/img/user/u7.jpg"
-                                        alt="Image">
-                                    <span class="status away"></span>
-                                </div>
-
-                                <div
-                                    class="media-body d-flex justify-content-between align-items-center">
-                                    <div class="message-contents">
-                                        <h4 class="title">Sophia</h4>
-                                        <p class="last-msg">Lorem ipsum dolor sit, amet consectetur
-                                            adipisicing elit. Nam itaque doloremque
-                                            odio,
-                                            eligendi delectus vitae.</p>
-                                    </div>
-
-                                    <div class="control outlined control-checkbox checkbox-primary">
-                                        <input type="checkbox">
-                                        <div class="control-indicator"></div>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </li>
-
-                        <li>
-                            <div class="media media-message">
-                                <div class="position-relative mr-3">
-                                    <img class="rounded-circle" src="assets/img/user/u8.jpg"
-                                        alt="Image">
-                                    <span class="status"></span>
-                                </div>
-
-                                <div
-                                    class="media-body d-flex justify-content-between align-items-center">
-                                    <div class="message-contents">
-                                        <h4 class="title">Sophia</h4>
-                                        <p class="last-msg">Lorem ipsum dolor sit, amet consectetur
-                                            adipisicing elit. Nam itaque doloremque
-                                            odio,
-                                            eligendi delectus vitae.</p>
-                                    </div>
-
-                                    <div class="control outlined control-checkbox checkbox-primary">
-                                        <input type="checkbox">
-                                        <div class="control-indicator"></div>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </li>
-
-                        <li>
-                            <div class="media media-message">
-                                <div class="position-relative mr-3">
-                                    <img class="rounded-circle" src="{{asset('images/apps/default.jpg')}}"
-                                        alt="Image">
-                                    <span class="status away"></span>
-                                </div>
-                                <div
-                                    class="media-body d-flex justify-content-between align-items-center">
-                                    <div class="message-contents">
-                                        <h4 class="title">Aaren</h4>
-                                        <p class="last-msg">Lorem ipsum dolor sit, amet consectetur
-                                            adipisicing elit. Nam itaque doloremque
-                                            odio,
-                                            eligendi delectus vitae.</p>
-                                    </div>
-
-                                    <div class="control outlined control-checkbox checkbox-primary">
-                                        <input type="checkbox">
-                                        <div class="control-indicator"></div>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </li>
-
-                        <li>
-                            <div class="media media-message">
-                                <div class="position-relative mr-3">
-                                    <img class="rounded-circle" src="assets/img/user/u2.jpg"
-                                        alt="Image">
-                                    <span class="status"></span>
-                                </div>
-                                <div
-                                    class="media-body d-flex justify-content-between align-items-center">
-                                    <div class="message-contents">
-                                        <h4 class="title">Abby</h4>
-                                        <p class="last-msg">Lorem ipsum dolor sit, amet consectetur
-                                            adipisicing elit. Nam itaque doloremque
-                                            odio,
-                                            eligendi delectus vitae.</p>
-                                    </div>
-
-                                    <div class="control outlined control-checkbox checkbox-primary">
-                                        <input type="checkbox">
-                                        <div class="control-indicator"></div>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </li>
-
-                        <li>
-                            <div class="media media-message">
-                                <div class="position-relative mr-3">
-                                    <img class="rounded-circle" src="assets/img/user/u3.jpg"
-                                        alt="Image">
-                                    <span class="status away"></span>
-                                </div>
-                                <div
-                                    class="media-body d-flex justify-content-between align-items-center">
-                                    <div class="message-contents">
-                                        <h4 class="title">Abriel</h4>
-                                        <p class="last-msg">Lorem ipsum dolor sit, amet consectetur
-                                            adipisicing elit. Nam itaque doloremque
-                                            odio,
-                                            eligendi delectus vitae.</p>
-                                    </div>
-
-                                    <div class="control outlined control-checkbox checkbox-primary">
-                                        <input type="checkbox">
-                                        <div class="control-indicator"></div>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </li>
-
-                        <li>
-                            <div class="media media-message">
-                                <div class="position-relative mr-3">
-                                    <img class="rounded-circle" src="assets/img/user/u4.jpg"
-                                        alt="Image">
-                                    <span class="status active"></span>
-                                </div>
-
-                                <div
-                                    class="media-body d-flex justify-content-between align-items-center">
-                                    <div class="message-contents">
-                                        <h4 class="title">Emma</h4>
-                                        <p class="last-msg">Lorem ipsum dolor sit, amet consectetur
-                                            adipisicing elit. Nam itaque doloremque
-                                            odio,
-                                            eligendi delectus vitae.</p>
-                                    </div>
-
-                                    <div class="control outlined control-checkbox checkbox-primary">
-                                        <input type="checkbox">
-                                        <div class="control-indicator"></div>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </li>
-
-                        <li>
-                            <div class="media media-message">
-                                <div class="position-relative mr-3">
-                                    <img class="rounded-circle" src="assets/img/user/u5.jpg"
-                                        alt="Image">
-                                    <span class="status"></span>
-                                </div>
-
-                                <div
-                                    class="media-body d-flex justify-content-between align-items-center">
-                                    <div class="message-contents">
-                                        <h4 class="title">Emily</h4>
-                                        <p class="last-msg">Lorem ipsum dolor sit, amet consectetur
-                                            adipisicing elit. Nam itaque doloremque
-                                            odio,
-                                            eligendi delectus vitae.</p>
-                                    </div>
-
-                                    <div class="control outlined control-checkbox checkbox-primary">
-                                        <input type="checkbox">
-                                        <div class="control-indicator"></div>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </li>
-
-                        <li>
-                            <div class="media media-message">
-                                <div class="position-relative mr-3">
-                                    <img class="rounded-circle" src="assets/img/user/u6.jpg"
-                                        alt="Image">
-                                    <span class="status away"></span>
-                                </div>
-
-                                <div
-                                    class="media-body d-flex justify-content-between align-items-center">
-                                    <div class="message-contents">
-                                        <h4 class="title">William</h4>
-                                        <p class="last-msg">Lorem ipsum dolor sit, amet consectetur
-                                            adipisicing elit. Nam itaque doloremque
-                                            odio,
-                                            eligendi delectus vitae.</p>
-                                    </div>
-
-                                    <div class="control outlined control-checkbox checkbox-primary">
-                                        <input type="checkbox">
-                                        <div class="control-indicator"></div>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </li>
-
-                        <li>
-                            <div class="media media-message">
-                                <div class="position-relative mr-3">
-                                    <img class="rounded-circle" src="assets/img/user/u7.jpg"
-                                        alt="Image">
-                                    <span class="status"></span>
-                                </div>
-
-                                <div
-                                    class="media-body d-flex justify-content-between align-items-center">
-                                    <div class="message-contents">
-                                        <h4 class="title">Sophia</h4>
-                                        <p class="last-msg">Lorem ipsum dolor sit, amet consectetur
-                                            adipisicing elit. Nam itaque doloremque
-                                            odio,
-                                            eligendi delectus vitae.</p>
-                                    </div>
-
-                                    <div class="control outlined control-checkbox checkbox-primary">
-                                        <input type="checkbox">
-                                        <div class="control-indicator"></div>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-
-                <div class="modal-footer px-4">
-                    <button type="button" class="btn btn-secondary btn-pill"
-                        data-bs-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary btn-pill">Add new member</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
+            // Mostrar u ocultar botones según el estado del módulo
+            if (module.status === 'Completed') {
+                $('#modal-application .buy-now').hide(); // Ocultar botón de compra
+                $('#modal-application .in-process').hide(); // Mostrar botón de in process
+                $('#modal-application .currently-added').show(); // Mostrar botón "Currently Added"
+            } else if (module.status === 'Pending') {
+                $('#modal-application .buy-now').show(); // Mostrar botón de compra
+                $('#modal-application .in-process').hide(); // Mostrar botón de in process
+                $('#modal-application .currently-added').hide(); // Ocultar botón "Currently Added"
+            } else if (module.status === 'In process') {
+                $('#modal-application .buy-now').hide(); // Mostrar botón de compra
+                $('#modal-application .currently-added').hide(); // Ocultar botón "Currently Added"
+                $('#modal-application .in-process').show(); // Mostrar botón de in process
+            }
+        });
+    });
+</script>
 @endsection

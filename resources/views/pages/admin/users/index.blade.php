@@ -64,15 +64,20 @@
                     </div>
 
                     <div class="modal-body px-4">
-                        {{-- Avatar --}}
-                        <div class="form-group row mb-6">
-                            <label for="coverImage" class="col-sm-4 col-lg-2 col-form-label">{{ __('User Image') }}</label>
-                            <div class="col-sm-8 col-lg-10">
-                                <div class="custom-file mb-1">
+                        <!-- Avatar -->
+                        <div class="form-group row">
+                            <label for="coverImage" class="col-sm-4 col-lg-4">{{ __('Customer Image') }}
+                                <div class="">
+                                    <!-- Imagen por defecto -->
+                                    <img id="defaultImage" class="mb-5" src=""
+                                        alt="Default Image" style="max-width: 100%; max-height: 150px;">
+                                </div>
+                            </label>
+                            <div class="col-sm-12 col-lg-8">
+                                <div class="custom-file">
                                     <input type="file" class="custom-file-input" id="coverImage" name="image">
                                     <label class="custom-file-label" for="coverImage"
-                                        id="customFileLabelImage">{{ __('Choose file') }}...</label>
-                                    <div class="invalid-feedback">{{ __('Example invalid custom file feedback') }}</div>
+                                        id="customFileLabel">{{ __('Choose file') }}...</label>
                                 </div>
                             </div>
                         </div>
@@ -197,11 +202,12 @@
                         @csrf
                         <!-- Avatar -->
                         <div class="form-group row mb-6">
-                            <label for="coverImageEdit" class="col-sm-4 col-lg-4">{{ __('User Image') }}
+                            <label for="coverImageEdit" class="col-sm-4 col-lg-4">{{ __('Customer Image') }}
                                 <div class="">
                                     <!-- Imagen por defecto -->
-                                    <img id="defaultImage" class="mb-5" src="{{asset('images/blank.png')}}"
-                                        alt="Default Image" style="max-width: 100%; max-height: 150px;">
+                                    <img id="defaultImageEdit" class="mb-5"
+                                        src="" alt="Default Image"
+                                        style="max-width: 100%; max-height: 150px;">
                                 </div>
                             </label>
                             <div class="col-sm-8 col-lg-8">
@@ -210,7 +216,6 @@
                                         name="edit_image">
                                     <label class="custom-file-label" for="coverImageEdit"
                                         id="customFileLabelEditImage">{{ __('Choose file') }}...</label>
-                                    <div class="invalid-feedback">{{ __('Example invalid custom file feedback') }}</div>
                                 </div>
                             </div>
                         </div>
@@ -308,11 +313,36 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
+        $(document).ready(function() {
+            // Mostrar la imagen por defecto
+            var userImage = '/images/users/blank.png';
+            $('#defaultImage').attr('src', userImage);
+
+            // Manejar cambios en el input file para previsualizar la nueva imagen
+            $('#coverImage').on('change', function() {
+                var input = this;
+
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+
+                    reader.onload = function(e) {
+                        $('#defaultImage').attr('src', e.target.result);
+                    };
+
+                    reader.readAsDataURL(input.files[0]);
+                } else {
+                    // Si se deja en blanco, volver a mostrar la imagen actual
+                    $('#defaultImage').attr('src', userImage);
+                }
+            });
+        });
+
         // Cambiar el texto del botón "Choose file..." al seleccionar un archivo
         document.getElementById('coverImage').addEventListener('change', function() {
             var fileName = this.value.split('\\').pop(); // Obtener solo el nombre del archivo
             document.getElementById('customFileLabel').innerText = fileName;
         });
+
         document.getElementById('coverImageEdit').addEventListener('change', function() {
             var fileName = this.value.split('\\').pop(); // Obtener solo el nombre del archivo
             document.getElementById('customFileLabelEditImage').innerText = fileName;

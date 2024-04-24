@@ -240,7 +240,7 @@ $(document).ready(function () {
                 $('#edit-location').val(customerData.location);
                 $('#edit-details').val(customerData.details);
 
-                var customerImage = customerData.image ? customerData.image : customerData.image;
+                var customerImage = customerData.image;
                 $('#defaultImageEdit').attr('src', customerImage);
 
                 // Manejar cambios en el input file para previsualizar la nueva imagen

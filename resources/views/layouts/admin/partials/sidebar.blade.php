@@ -55,7 +55,7 @@
                   <!-- Brands -->
                   <li class="{{request()->is('home/brands*')? 'active' : ''}}">
                     <a class="sidenav-item-link" href="{{route('brands.index')}}">
-                        <i class="mdi mdi-tag-faces"></i>
+                        <i class="mdi mdi-tag"></i>
                         <span class="nav-text">{{ __('Brands') }}</span>
                     </a>
                 </li>
@@ -63,7 +63,7 @@
                 <!-- Suppliers -->
                 <li class="{{request()->is('home/suppliers*')? 'active' : ''}}">
                     <a class="sidenav-item-link" href="{{route('suppliers.index')}}">
-                        <i class="mdi mdi-dns-outline"></i>
+                        <i class="mdi mdi-account-multiple-outline"></i>
                         <span class="nav-text">{{ __('Suppliers') }}</span>
                     </a>
                 </li>
@@ -111,6 +111,38 @@
                     </a>
                 </li> --}}
 
+                <!-- My Company -->
+                <li class="has-sub">
+                    <a class="sidenav-item-link" href="javascript:void(0)">
+                        <i class="mdi mdi-login"></i>
+                        <span class="nav-text">{{__('My Company')}}</span> <b class="caret"></b>
+                    </a>
+                    <div class="collapse">
+                        <ul class="sub-menu" id="authentication" data-parent="#sidebar-menu">
+                            <li class="">
+                                <a href="#">
+                                    <span class="nav-text">{{ __('Payment Gateway')}}</span>
+                                </a>
+                            </li>
+                            <li class="">
+                                <a href="#">
+                                    <span class="nav-text">{{ __('My Purchases')}}</span>
+                                </a>
+                            </li>
+                            <li class="">
+                                <a href="#">
+                                    <span class="nav-text">{{ __('My Invoice')}}</span>
+                                </a>
+                            </li>
+                            <li class="">
+                                <a href="#">
+                                    <span class="nav-text">{{ __('AFIP')}}</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
                 <hr>
                 <!-- Settings -->
                 <li class="{{request()->is('home/settings')? 'active' : ''}}">
@@ -121,27 +153,28 @@
                     <hr>
                 </li>
 
-                {{-- <!-- Authentication -->
-                <li class="has-sub">
-                    <a class="sidenav-item-link" href="#javascript:void(0)">
-                        <i class="mdi mdi-login"></i>
-                        <span class="nav-text">Authentication</span> <b class="caret"></b>
-                    </a>
-                    <div class="collapse">
-                        <ul class="sub-menu" id="authentication" data-parent="#sidebar-menu">
-                            <li class="">
-                                <a href="#sign-in">
-                                    <span class="nav-text">Sign In</span>
-                                </a>
-                            </li>
-                            <li class="">
-                                <a href="#sign-up">
-                                    <span class="nav-text">Sign Up</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
+                {{--
+                    <!-- Authentication -->
+                    <li class="has-sub">
+                        <a class="sidenav-item-link" href="#javascript:void(0)">
+                            <i class="mdi mdi-login"></i>
+                            <span class="nav-text">{{__('Authentication')}}</span> <b class="caret"></b>
+                        </a>
+                        <div class="collapse">
+                            <ul class="sub-menu" id="authentication" data-parent="#sidebar-menu">
+                                <li class="">
+                                    <a href="#sign-in">
+                                        <span class="nav-text">Sign In</span>
+                                    </a>
+                                </li>
+                                <li class="">
+                                    <a href="#sign-up">
+                                        <span class="nav-text">Sign Up</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
 
                 <!-- Icons -->
                 <li class="has-sub">
